@@ -1,0 +1,20 @@
+<html>
+<head>
+	<title>jQuery File Tree Demo</title>
+	<link rel="stylesheet" href="jqueryFileTree.css">
+</head>
+<body>
+	<h1>jQuery File Tree Demo</h1>
+	<div class="filetree"></div>
+</body>
+</html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="jqueryFileTree.js"></script>
+<script type="text/javascript">
+$(document).ready (function() {
+	$('.filetree').fileTree({root: '../', script: 'connectors/jqueryFileTree.php'}, function(file) {
+		console.log(file);
+	});
+});
+</script>
