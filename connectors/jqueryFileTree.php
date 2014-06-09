@@ -16,7 +16,7 @@
 // Output a list of files for jQuery File Tree
 //
 
-$_POST['dir'] = urldecode($_POST['dir']);
+$_POST['dir'] = urldecode((isset($_POST['dir']) ? $_POST['dir'] : null ));
 
 if( file_exists($_POST['dir']) ) {
 	$files = scandir($_POST['dir']);
