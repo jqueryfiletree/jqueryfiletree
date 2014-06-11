@@ -31,7 +31,7 @@
 		// All dirs
 		for (String file : files) {
 		    if (new File(dir, file).isDirectory()) {
-				out.print("<li class=\"directory collapsed\"><a href=\"#\" rel=\"" + dir + file + "/\">"
+				out.print("<li class=\"directory collapsed\" ><input id=\"check\" type=\"checkbox\" onclick=\"handleCheckbox(this);\" /><a style=\"display: inline-block;\" href=\"#\" rel=\"" + dir + file + "/\">"
 					+ file + "</a></li>");
 		    }
 		}
