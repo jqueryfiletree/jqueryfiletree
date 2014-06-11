@@ -4,6 +4,8 @@
 // A Beautiful Site (http://abeautifulsite.net/)
 // 24 March 2008
 //
+// Visit http://abeautifulsite.net/notebook.php?article=58 for more information
+//
 // Usage: $('.fileTreeDemo').fileTree( options, callback )
 //
 // Options:  root           - root folder to display; default = /
@@ -22,7 +24,6 @@
 // is copyright 2008 A Beautiful Site, LLC. 
 //
 if(jQuery) (function($){
-
 	$.extend($.fn, {
 		fileTree: function(options, file) {
 			// Default options
@@ -44,7 +45,21 @@ if(jQuery) (function($){
 					$.post(options.script, { dir: dir }, function(data) {
 						$(element).find('.start').html('');
 						$(element).removeClass('wait').append(data);
-						if( options.root == dir ) $(element).find('UL:hidden').show(); else $(element).find('UL:hidden').slideDown({ duration: options.expandSpeed, easing: options.expandEasing });
+						if( options.root == dir ){
+							$(element).find('UL:hidden').show();
+						}
+						else{
+							$(element).find('UL:hidden').slideDown({ duration: o.expandSpeed, easing: o.expandEasing });
+							if($(element).prop("tagName") != 'DIV'){ //initially it would be div, after that, it would be li
+								var cb = $(element).children("input#check:first");	//this is the parent checkbox
+								var checkBoxes = $(element).find('UL.jqueryFileTree').find("input#check");	//these are the children checkboxes
+								if (cb.prop('checked')) {
+									$(checkBoxes).prop('checked', true);
+								} else {
+									$(checkBoxes).prop('checked', false);
+								}
+							}
+						}
 						bindTree(element);
 					});
 				}
