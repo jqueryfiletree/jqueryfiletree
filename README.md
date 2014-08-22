@@ -19,6 +19,7 @@ FEATURES
 * Supports jQuery easing functions
 * Single- and multi-folder views
 * Configurable load message
+* Multi-select select with checkboxes
 
 CREATING A FILE TREE
 ====================
@@ -50,7 +51,8 @@ Parameters are passed as an object to the fileTree()function. Valid options incl
 	<tr> <td>collapseEasing</td> <td>Easing function to use on collapse</td> <td>None</td> </tr>
 	<tr> <td>multiFolder</td> <td>Whether or not to limit the browser to one subfolder at a time</td> <td>true</td> </tr>
 	<tr> <td>loadMessage</td> <td>Message to display while initial tree loads (can be HTML)</td> <td>"Loading..."</td> </tr>
-	
+	<tr> <td>multiSelect</td> <td>Append checkbox to each line item to select more than one</td> <td>false</td> </tr>
+
 </table>
 
 There are many options available, which would look something like this:
@@ -79,7 +81,7 @@ jQuery File Tree comes with a handful of serverside connector scripts that are u
 
 Connector scripts for the following languages are provided:
 
-* PHP by Cory LaViska
+* PHP by Cory LaViska (originally)
 * ASP (VBS) by Chazzuka
 * ASP.NET (C#) by Andrew Sweeny
 * ColdFusion by Tjarko Rikkerink
@@ -90,6 +92,7 @@ Connector scripts for the following languages are provided:
 * Python/Django by Martin Skou
 * Ruby by Erik Lax
 
+(DAVE)
 Note that all of the connector scripts have been left unmaintained outside of the PHP one in which I have updated (and will continue to do so). If you've improved or created a connector, feel free to add it to this repo.
 
 
@@ -97,7 +100,7 @@ CUSTOM CONNECTOR SCRIPTS
 ========================
 You can create a custom connector script to extend the functionality of the file tree. The easiest way to do this is probably by modifying one of the scripts supplied in the download. If you want to start from scratch, your script should accept one POST variable (dir) and output an unsorted list in the following format:
 
-	<ul class="jqueryFileTree" style="display: none;">
+	<ul class="jqueryFileTree">
 		<li class="directory collapsed"><a href="#" rel="/this/folder/">Folder Name</a></li>
 		(additional folders here)
 		<li class="file ext_txt"><a href="#" rel="/this/folder/filename.txt">filename.txt</a></li>
@@ -106,6 +109,14 @@ You can create a custom connector script to extend the functionality of the file
 
 Note that the corresponding file extension should be written as a class of the li element, prefixed with ext_. (The prefix is used to prevent invalid class names for file extensions that begin with non-alpha characters.)
 
+Additionally you may choose to enable multi-select, which appends a checkbox to each item. Visible child elements will automatically be checked/unchecked along with the parent. Currently this is only supported in PHP; feel free to update other connectors to reflect the following format:
+
+	<ul class="jqueryFileTree">
+		<li class="directory collapsed"><input type='checkbox' /><a href="#" rel="/this/folder/">Folder Name</a></li>
+		(additional folders here)
+		<li class="file ext_txt"><input type='checkbox' /><a href="#" rel="/this/folder/filename.txt">filename.txt</a></li>
+		(additional files here)
+	</ul>
 
 LICENSING & TERMS OF USE
 ========================
