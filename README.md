@@ -20,6 +20,7 @@ FEATURES
 * Single- and multi-folder views
 * Configurable load message
 * Multi-select select with checkboxes
+* Supports event listening for callback hooks
 
 CREATING A FILE TREE
 ====================
@@ -117,6 +118,37 @@ Additionally you may choose to enable multi-select, which appends a checkbox to 
 		<li class="file ext_txt"><input type='checkbox' /><a href="#" rel="/this/folder/filename.txt">filename.txt</a></li>
 		(additional files here)
 	</ul>
+
+
+CALLBACK HOOKS
+=========================
+jQuery File Tree now supports binding event listeners to the file tree element
+
+```javascript
+$('.filetree')
+	.on('filetreeexpand', function (e, data)	{ console.log(data); })
+	.on('filetreeexpanded', function (e, data)	{ console.log(data); })
+	.on('filetreecollapsed', function (e, data)	{ console.log(data); })
+	.on('filetreecollapse', function (e, data)	{ console.log(data); })
+	.on('filetreechecked', function (e, data)	{ console.log(data); })
+	.on('filetreeunchecked', function (e, data)	{ console.log(data); })
+	.on('filetreeclicked', function(e, data)	{ console.log(data); });
+```
+
+All return the data object with the following properties
+
+<table>
+<tr>
+	<th>Property</th><th>Value</th>
+</tr>
+<tr> <th>li</th><th>LI jQuery object</th> </tr>
+<tr> <th>type</th><th>file | directory</th> </tr>
+<tr> <th>value</th><th>name of the file or directory</th> </tr>
+<tr> <th>rel</th><th>relative path to file or directory</th> </tr>
+<tr> <th>trigger</th><th>type of trigger called</th> </tr>
+</table>
+
+Pretty much has the information you need, but I included the LI object anyways so you can easily get any other data you want with something like ``` data.li.prop('class') ```
 
 LICENSING & TERMS OF USE
 ========================
