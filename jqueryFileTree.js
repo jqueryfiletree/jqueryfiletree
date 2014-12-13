@@ -54,10 +54,17 @@ if(jQuery) (function($){
 					.done(function(data){
 						$(element).find('.start').html('');
 						$(element).removeClass('wait').append(data);
-						if( options.root == dir ) $(element).find('UL:hidden').show(); else $(element).find('UL:hidden').slideDown({ duration: options.expandSpeed, easing: options.expandEasing });
+                        
+						if( options.root == dir ){ 
+                            $(element).find('UL:hidden').show();
+                            $(element).find('LI UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing });
+                        } else {
+                            $(element).removeClass('collapsed').addClass('expanded');
+                            $(element).find('UL:hidden').slideDown({ duration: options.expandSpeed, easing: options.expandEasing });
+                        }
 						bindTree(element);
-
-						$(this).parent().removeClass('collapsed').addClass('expanded');
+                        
+                        $(this).parent().removeClass('collapsed').addClass('expanded');
 
 						_trigger($(this), 'filetreeexpanded', data);
 					})
@@ -83,10 +90,16 @@ if(jQuery) (function($){
 
 								if( !options.multiFolder ) {
 									$(this).parent().parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing });
-									$(this).parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
+                                    $(this).parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
 								}
-								$(this).parent().find('UL').remove(); // cleanup
-								showTree( $(this).parent(), escape($(this).attr('rel').match( /.*\// )) );
+                                
+                                if($(this).parent().find('UL').length){
+                                    $(this).parent().children('UL').slideDown({ duration: options.expandSpeed, easing: options.expandEasing });
+                                    $(this).parent().removeClass('collapsed').addClass('expanded');
+                                }else{
+                                    $(this).parent().find('UL').remove(); // cleanup
+                                    showTree( $(this).parent(), escape($(this).attr('rel').match( /.*\// )) );
+                                }
 							} else {
 								// Collapse
 								_trigger($(this), 'filetreecollapse', data);
@@ -112,8 +125,8 @@ if(jQuery) (function($){
 				$(this).html('<ul class="jqueryFileTree start"><li class="wait">' + options.loadMessage + '<li></ul>');
 
 				// Get the initial file list
-				showTree( $(this), escape(options.root) );
-
+                showTree( $(this), escape(options.root) );
+                
 				// wrapper to append trigger type to data
 				function _trigger(element, eventType, data) {
 					data.trigger = eventType;
