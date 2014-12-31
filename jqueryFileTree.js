@@ -57,7 +57,7 @@ if(jQuery) (function($){
 						if( options.root == dir ) $(element).find('UL:hidden').show(); else $(element).find('UL:hidden').slideDown({ duration: options.expandSpeed, easing: options.expandEasing });
 						bindTree(element);
 
-						$(this).parent().removeClass('collapsed').addClass('expanded');
+						//$(this).parent().removeClass('collapsed').addClass('expanded');
 
 						_trigger($(this), 'filetreeexpanded', data);
 					})
@@ -85,6 +85,8 @@ if(jQuery) (function($){
 									$(this).parent().parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing });
 									$(this).parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
 								}
+
+								$(this).parent().removeClass('collapsed').addClass('expanded');
 								$(this).parent().find('UL').remove(); // cleanup
 								showTree( $(this).parent(), escape($(this).attr('rel').match( /.*\// )) );
 							} else {
