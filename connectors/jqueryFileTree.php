@@ -28,7 +28,7 @@ if( !array_key_exists('HTTP_REFERER', $_SERVER) ) exit('No direct script access 
 $root = null;
 if( !$root ) exit("ERROR: Root filesystem directory not set in jqueryFileTree.php");
 
-$postDir = urldecode($root.(isset($_POST['dir']) ? $_POST['dir'] : null ));
+$postDir = rawurldecode($root.(isset($_POST['dir']) ? $_POST['dir'] : null ));
 
 // set checkbox if multiSelect set to true
 $checkbox = ( isset($_POST['multiSelect']) && $_POST['multiSelect'] == 'true' ) ? "<input type='checkbox' />" : null;

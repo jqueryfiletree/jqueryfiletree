@@ -88,7 +88,7 @@ if(jQuery) (function($){
 
 								$(this).parent().removeClass('collapsed').addClass('expanded');
 								$(this).parent().find('UL').remove(); // cleanup
-								showTree( $(this).parent(), escape($(this).attr('rel').match( /.*\// )) );
+								showTree( $(this).parent(), encodeURIComponent($(this).attr('rel').match( /.*\// )) );
 							} else {
 								// Collapse
 								_trigger($(this), 'filetreecollapse', data);
