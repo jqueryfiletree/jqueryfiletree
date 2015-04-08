@@ -31,6 +31,7 @@ UL.jqueryFileTree A:hover {
 .jqueryFileTree LI.expanded { background: url(images/folder_open.png) left top no-repeat; }
 .jqueryFileTree LI.file { background: url(images/file.png) left top no-repeat; }
 .jqueryFileTree LI.wait { background: url(images/spinner.gif) left top no-repeat; }
+.jqueryFileTree LI.selected > a { font-weight: bold; }
 /* File Extensions*/
 .jqueryFileTree LI.ext_3gp { background: url(images/film.png) left top no-repeat; }
 .jqueryFileTree LI.ext_afp { background: url(images/code.png) left top no-repeat; }

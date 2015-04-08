@@ -57,7 +57,14 @@ if(jQuery) (function($){
 						if( options.root == dir ) $(element).find('UL:hidden').show(); else $(element).find('UL:hidden').slideDown({ duration: options.expandSpeed, easing: options.expandEasing });
 						bindTree(element);
 
-						//$(this).parent().removeClass('collapsed').addClass('expanded');
+						// if multiselect is on and the parent folder is selected, propagate check to child elements
+						var li = $('[rel="'+decodeURIComponent(dir)+'"]').parent();
+						if( options.multiSelect && li.children('input').is(':checked') ) {
+							li.find('ul li input').each(function() {
+								$(this).prop('checked', true);
+								$(this).parent().addClass('selected');
+							});
+						}
 
 						_trigger($(this), 'filetreeexpanded', data);
 					})
@@ -101,6 +108,22 @@ if(jQuery) (function($){
 						} else {
 							// this is a file click, return file information
 							file($(this).attr('rel'));
+							
+							if( !options.multiSelect ) {
+								// remove "selected" class if set, then append class to currently selected file
+								$('.jqueryFileTree').find('li').removeClass('selected');
+								$(this).parent().addClass('selected');
+							} else {
+								// since it's multiselect, more than one element can have the 'selected' class
+								if( $(this).parent().find('input').is(':checked') ) {
+									$(this).parent().find('input').prop('checked', false);
+									$(this).parent().removeClass('selected');
+								} else
+								{
+									$(this).parent().find('input').prop('checked', true);
+									$(this).parent().addClass('selected');
+								}
+							}
 
 							_trigger($(this), 'filetreeclicked', data);
 						}
@@ -133,11 +156,16 @@ if(jQuery) (function($){
 					// propagate check status to (visible) child checkboxes
 					data.li.find('input:checkbox').prop( 'checked', $(this).prop('checked') );
 
-					// set triggers
-					if( $(this).prop('checked') )
+					// set trigger
+					if( $(this).prop('checked') ) {
+						data.li.addClass('selected');				// add 'selected' class
+						data.li.find('li').addClass('selected');	// also add to children
 						_trigger($(this), 'filetreechecked', data);
-					else
+					} else {
+						data.li.removeClass('selected');
+						data.li.find('li').removeClass('selected');
 						_trigger($(this), 'filetreeunchecked', data);
+					}
 				});
 			});
 		}
