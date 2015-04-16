@@ -32,6 +32,7 @@ $postDir = rawurldecode($root.(isset($_POST['dir']) ? $_POST['dir'] : null ));
 
 // set checkbox if multiSelect set to true
 $checkbox = ( isset($_POST['multiSelect']) && $_POST['multiSelect'] == 'true' ) ? "<input type='checkbox' />" : null;
+$onlyFolders = ( isset($_POST['onlyFolders']) && $_POST['onlyFolders'] == 'true' ) ? true : false;
 
 if( file_exists($postDir) ) {
 
@@ -52,7 +53,7 @@ if( file_exists($postDir) ) {
 			if( file_exists($postDir . $file) && $file != '.' && $file != '..' ) {
 				if( is_dir($postDir . $file) )
 					echo "<li class='directory collapsed'>{$checkbox}<a href='#' rel='" .$htmlRel. "/'>" . $htmlName . "</a></li>";
-				else
+				else if (! $onlyFolders)
 					echo "<li class='file ext_{$ext}'>{$checkbox}<a href='#' rel='" . $htmlRel . "'>" . $htmlName . "</a></li>";
 			}
 		}

@@ -17,6 +17,7 @@
  *           multiFolder    - whether or not to limit the browser to one subfolder at a time
  *           loadMessage    - Message to display while initial tree loads (can be HTML)
  *           multiSelect    - append checkbox to each line item to select more than one
+ *           onlyFolders    - show only folders
  *
  *
  * TERMS OF USE
@@ -40,6 +41,7 @@ if(jQuery) (function($){
 			if( options.multiFolder		=== undefined ) options.multiFolder		= true;
 			if( options.loadMessage		=== undefined ) options.loadMessage		= 'Loading...';
 			if( options.multiSelect		=== undefined ) options.multiSelect		= false;
+			if( options.onlyFolders		=== undefined ) options.onlyFolders		= false;
 
 			$(this).each( function() {
 
@@ -49,6 +51,7 @@ if(jQuery) (function($){
 					$.post(options.script,
 					{
 						dir: dir,
+						onlyFolders: options.onlyFolders,
 						multiSelect: options.multiSelect
 					})
 					.done(function(data){
