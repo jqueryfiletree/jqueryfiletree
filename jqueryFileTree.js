@@ -42,6 +42,7 @@ if(jQuery) (function($){
 			if( options.loadMessage		=== undefined ) options.loadMessage		= 'Loading...';
 			if( options.multiSelect		=== undefined ) options.multiSelect		= false;
 			if( options.onlyFolders		=== undefined ) options.onlyFolders		= false;
+			if( options.onlyFiles		=== undefined ) options.onlyFiles		= false;
 
 			$(this).each( function() {
 
@@ -52,6 +53,7 @@ if(jQuery) (function($){
 					{
 						dir: dir,
 						onlyFolders: options.onlyFolders,
+						onlyFiles: options.onlyFiles,
 						multiSelect: options.multiSelect
 					})
 					.done(function(data){
