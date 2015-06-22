@@ -44,6 +44,11 @@ if(jQuery) (function($){
 			if( options.onlyFolders		=== undefined ) options.onlyFolders		= false;
 			if( options.onlyFiles		=== undefined ) options.onlyFiles		= false;
 
+			// internal vars
+			var jqft = {
+				initiatorClass: null
+			}
+
 			$(this).each( function() {
 
 				function showTree(element, dir) {
@@ -113,10 +118,10 @@ if(jQuery) (function($){
 						} else {
 							// this is a file click, return file information
 							file($(this).attr('rel'));
-							
+
 							if( !options.multiSelect ) {
 								// remove "selected" class if set, then append class to currently selected file
-								$('.jqueryFileTree').find('li').removeClass('selected');
+								$('div[class="'+jqft.initiatorClass+'"]').find('li').removeClass('selected');
 								$(this).parent().addClass('selected');
 							} else {
 								// since it's multiselect, more than one element can have the 'selected' class
@@ -140,6 +145,9 @@ if(jQuery) (function($){
 
 				// Loading message
 				$(this).html('<ul class="jqueryFileTree start"><li class="wait">' + options.loadMessage + '<li></ul>');
+
+				// store the intiator class
+				jqft.initiatorClass = $(this).attr('class');
 
 				// Get the initial file list
 				showTree( $(this), escape(options.root) );
