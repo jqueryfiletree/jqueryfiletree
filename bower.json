@@ -24,7 +24,7 @@
     "bower_components",
     "src",
     "tests",
-    "*.md"
+    "*.md",
     "gulpfile.js"
   ],
   "keywords": [
@@ -42,5 +42,5 @@
   ],
   "contributors": [
     "Dave Rogers <@daveindigital>"
-  ],
+  ]
 }
