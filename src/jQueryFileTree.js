@@ -1,6 +1,6 @@
 
 /*
-  * jQuery File Tree Plugin
+  * jQueryFileTree Plugin
   *
   * @author - Cory S.N. LaViska - A Beautiful Site (http://abeautifulsite.net/) - 24 March 2008
   * @author - Dave Rogers - https://github.com/daverogers/jQueryFileTree

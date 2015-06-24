@@ -14,7 +14,7 @@ gulp.task('tests', function() {
     attempt.test(function(){
         // copy images, connectors, and min files to tests/manual folder
         gulp.src(['dist/images/**', 'dist/connectors/**'], {base: 'dist'}).pipe(gulp.dest('tests/manual'));
-        gulp.src('dist/jQueryFileTree.min.css').pipe(gulp.dest('tests/manual/css'));
+        gulp.src('dist/jQueryFileTree.min.css').pipe(gulp.dest('tests/manual'));
         gulp.src('dist/jQueryFileTree.min.js').pipe(gulp.dest('tests/manual'));
     });
 });
@@ -41,8 +41,8 @@ gulp.task('less', function () {
 
         // copy jQueryFileTree.min.css to test folder
         gulp.src('dist/jQueryFileTree.min.css')
-            .pipe(changed('tests/manual/css'), {extension: '.css'})
-            .pipe(gulp.dest('tests/manual/css'));
+            .pipe(changed('tests/manual'), {extension: '.css'})
+            .pipe(gulp.dest('tests/manual'));
     });
 });
 

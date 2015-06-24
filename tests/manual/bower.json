@@ -1,11 +1,11 @@
 {
   "name": "jqueryfiletree-tests",
   "version": "0.0.1",
-  "homepage": "https://github.com/daverogers/jQueryFileTree",
+  "homepage": "https://github.com/jqueryfiletree/jqueryfiletree",
   "authors": [
     "Dave Rogers <@daveindigital>"
   ],
-  "description": "simple manual test page for jqueryfiletree",
+  "description": "simple manual test page for jQueryFileTree",
   "license": "MIT",
   "ignore": [
     "**/.*",

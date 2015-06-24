@@ -4,9 +4,9 @@ jQueryFileTree
 ##### NOTE: v2.0.0 is written in CoffeeScript and LESS. Now supports Bower and Gulp (for compiling). View CHANGELOG.md to read more.
 
 
-jQuery File Tree is a configurable, AJAX file browser plugin for jQuery. This repo is a continuation of unmaintained jQuery File Tree (12 April 2008) by Cory S.N. LaViska at ABeautifulSite.net
+jQueryFileTree is a configurable, AJAX file browser plugin for jQuery. This repo is a continuation of unmaintained jQuery File Tree (12 April 2008) by Cory S.N. LaViska at ABeautifulSite.net
 
-jQuery File Tree requires at least jQuery 1.2
+jQueryFileTree requires at least jQuery 1.2
 
 FEATURES
 ========
@@ -90,7 +90,7 @@ The file tree relies 100% on CSS for styling. Refer to jqueryFileTree.less to ma
 
 CONNECTOR SCRIPTS
 =================
-jQuery File Tree comes with a handful of serverside connector scripts that are used to read the file system on your server and return data to the clientside script via AJAX. The default connector script is jqueryFileTree.php. You can use a connector script for another language by setting the script parameter to the location of the script you want to use (see Configuring the File Tree). Alternatively, you can build a custom connector script to extend the functionality of jQuery File Tree to better suit your needs (see Custom Connector Scripts).
+jQueryFileTree comes with a handful of serverside connector scripts that are used to read the file system on your server and return data to the clientside script via AJAX. The default connector script is jqueryFileTree.php. You can use a connector script for another language by setting the script parameter to the location of the script you want to use (see Configuring the File Tree). Alternatively, you can build a custom connector script to extend the functionality of jQueryFileTree to better suit your needs (see Custom Connector Scripts).
 
 Connector scripts for the following languages are provided:
 
@@ -134,7 +134,7 @@ Additionally you may choose to enable multi-select, which appends a checkbox to 
 
 EVENTS
 =========================
-jQuery File Tree now supports binding event listeners to the file tree element
+jQueryFileTree now supports binding event listeners to the file tree element
 
 ```javascript
 $('.filetree')

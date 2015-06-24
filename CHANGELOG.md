@@ -1,3 +1,8 @@
+### 2.0.1 - 06/24/2015
+* Fixing test CSS URL issue
+* Moved repo to its own named organization and now using that name style throughout this project (jQueryFileTree)
+* Updated Bower JSON files
+
 ### 2.0.0 - 06/24/2015
 * Now written with LESS and CoffeeScript (core functionality remains essentially the same)
 * Using a custom easing now checks that the easing function exists, else logs error and reverts to default easing (swing). ‘Swing’ now explicitly set as default rather than NULL.
