@@ -1,6 +1,9 @@
 jQueryFileTree
 ==============
 
+##### NOTE: v2.0.0 is written in CoffeeScript and LESS. Now supports Bower and Gulp (for compiling). View CHANGELOG.md to read more.
+
+
 jQuery File Tree is a configurable, AJAX file browser plugin for jQuery. This repo is a continuation of unmaintained jQuery File Tree (12 April 2008) by Cory S.N. LaViska at ABeautifulSite.net
 
 jQuery File Tree requires at least jQuery 1.2
@@ -16,11 +19,15 @@ FEATURES
 * Supports custom connector scripts for extended functionality
 * Customizable expand/collapse event
 * Customizable expand/collapse speeds
-* Supports jQuery easing functions
+* Supports easing functions
 * Single- and multi-folder views
 * Configurable load message
 * Multi-select select with checkboxes
-* Supports event listening for callback hooks
+* Supports event listening on unique actions
+
+INSTALLING
+==========
+`bower install jqueryfiletree --save`
 
 CREATING A FILE TREE
 ====================
@@ -37,24 +44,29 @@ Where .class is the class of an empty DIV element that exists on your page. The 
 
 CONFIGURING THE FILE TREE
 =========================
-Parameters are passed as an object to the fileTree()function. Valid options include:
+Parameters are passed as an object to the fileTree() function. Valid options include:
 
 <table>
 	<tr>
 		<th>Parameter</th><th>Description</th><th>Default Value</th>
 	</tr>
-	<tr> <td>root</td><td>root folder to display</td><td>/</td> </tr>
-	<tr> <td>script</td> <td>location of the serverside AJAX file to use</td> <td>jqueryFileTree.php</td> </tr>
-	<tr> <td>folderEvent</td> <td>event to trigger expand/collapse</td> <td>click</td> </tr>
+	<tr> <td>root</td><td>root folder to display</td><td>"/"</td> </tr>
+	<tr> <td>script</td> <td>location of the serverside AJAX file to use</td> <td>"jqueryFileTree.php"</td> </tr>
+	<tr> <td>folderEvent</td> <td>event to trigger expand/collapse</td> <td>"click"</td> </tr>
 	<tr> <td>expandSpeed</td> <td>Speed to expand branches (in ms); use -1 for no animation</td> <td>500</td> </tr>
-	<tr> <td>collapseSpeed</td> <td>Speed to collapse branches (in ms); use -1 for no animatio</td> <td>500</td> </tr>
-	<tr> <td>expandEasing</td> <td>Easing function to use on expand</td> <td>None</td> </tr>
-	<tr> <td>collapseEasing</td> <td>Easing function to use on collapse</td> <td>None</td> </tr>
+	<tr> <td>collapseSpeed</td> <td>Speed to collapse branches (in ms); use -1 for no animation</td> <td>500</td> </tr>
+	<tr> <td>expandEasing \*</td> <td>Easing function to use on expand</td> <td>"swing"</td> </tr>
+	<tr> <td>collapseEasing \*</td> <td>Easing function to use on collapse</td> <td>"swing"</td> </tr>
 	<tr> <td>multiFolder</td> <td>Whether or not to limit the browser to one subfolder at a time</td> <td>true</td> </tr>
 	<tr> <td>loadMessage</td> <td>Message to display while initial tree loads (can be HTML)</td> <td>"Loading..."</td> </tr>
+	<tr> <td>errorMessage</td> <td>Message to display if unable to load tree</td> <td>"Unable to get file tree information"</td> </tr>
 	<tr> <td>multiSelect</td> <td>Append checkbox to each line item to select more than one</td> <td>false</td> </tr>
-
+	<tr> <td>onlyFolders</td> <td>Filter files and only return folders</td> <td>false</td> </tr>
+	<tr> <td>onlyFiles</td> <td>Filter folders and only return files</td> <td>false</td> </tr>
 </table>
+
+\* _Anything other than 'swing' and 'linear' requires an external lib or script like [jQuery UI](http://jqueryui.com/) or [jquery.easing](https://github.com/gdsmith/jquery.easing/)_
+
 
 There are many options available, which would look something like this:
 
@@ -73,7 +85,7 @@ There are many options available, which would look something like this:
 
 STYLING THE FILE TREE
 =====================
-The file tree relies 100% on CSS for styling. Refer to jqueryFileTree.css to make any changes to the default styling.
+The file tree relies 100% on CSS for styling. Refer to jqueryFileTree.less to make any changes to the default styling.
 
 
 CONNECTOR SCRIPTS
@@ -94,7 +106,7 @@ Connector scripts for the following languages are provided:
 * Ruby by Erik Lax
 
 (DAVE)
-Note that all of the connector scripts have been left unmaintained outside of the PHP one in which I have updated (and will continue to do so). If you've improved or created a connector, feel free to add it to this repo.
+Note that all of the connector scripts have been left unmaintained outside of the PHP one in which I have updated (and will continue to do so). If you've improved or created a connector, feel free to create a pull request. *Use connector scripts as a starting point, but be mindful that often such (largely) unmaintained examples lack the security necessary for production.*
 
 
 CUSTOM CONNECTOR SCRIPTS
@@ -120,7 +132,7 @@ Additionally you may choose to enable multi-select, which appends a checkbox to 
 	</ul>
 
 
-CALLBACK HOOKS
+EVENTS
 =========================
 jQuery File Tree now supports binding event listeners to the file tree element
 
@@ -145,15 +157,23 @@ All return the data object with the following properties
 <tr> <th>type</th><th>file | directory</th> </tr>
 <tr> <th>value</th><th>name of the file or directory</th> </tr>
 <tr> <th>rel</th><th>relative path to file or directory</th> </tr>
-<tr> <th>trigger</th><th>type of trigger called</th> </tr>
+<tr> <th>container</th><th>container jQuery object (ie: `$('.filetree')`)</th> </tr>
 </table>
 
-Pretty much has the information you need, but I included the LI object anyways so you can easily get any other data you want with something like ``` data.li.prop('class') ```
+Pretty much has the information you need, but I included the LI object anyways so you can easily get any other data you want with something like ``` data.li.prop('class') ```.
 
 LICENSING & TERMS OF USE
 ========================
 This plugin is dual-licensed under the GNU General Public License and the MIT License and is copyright 2008 A Beautiful Site, LLC.
 
+TESTING
+=======
+In order to test, you'll need Bower and Gulp. Right now, I just have a manual browser demo to test functionality.
+* In Terminal, go to the `/tests/manual/` folder and type `bower install` to set up the Bower assets.
+* Go to the main project folder and type `gulp tests` to set up the testing assets. Use this command any time the connectors and/or images are changed.
+* `gulp coffee` will compile `/src/coffeescript/jQueryFileTree.coffee` to JS, minify, and copy to `/dist/` as well as the testing folder (if testing is set up). A non-minified version is saved to `/src/` for debugging the output.
+* `gulp less` will compile `/src/less/jQueryFileTree.less` to CSS, minify, and copy to `/dist/` as well as the testing folder (if testing is set up). A non-minified version is saved to `/src/` for debugging the output.
+* `gulp` or `gulp default` will run `coffee`, `less`, and `tests` consecutively.
 
 SPECIAL THANKS
 ==============

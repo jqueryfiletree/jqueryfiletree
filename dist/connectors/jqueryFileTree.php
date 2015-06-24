@@ -20,12 +20,13 @@ if( !array_key_exists('HTTP_REFERER', $_SERVER) ) exit('No direct script access 
  * Output a list of files for jQuery File Tree
  */
 
-/** 
+/**
  * filesystem root - USER needs to set this!
  * -> prevents debug users from exploring system's directory structure
- * ex: $root = $_SERVER['DOCUMENT_ROOT']; 
+ * ex: $root = $_SERVER['DOCUMENT_ROOT'];
  */
-$root = null;
+//$root = null;
+$root = $_SERVER['DOCUMENT_ROOT'];
 if( !$root ) exit("ERROR: Root filesystem directory not set in jqueryFileTree.php");
 
 $postDir = rawurldecode($root.(isset($_POST['dir']) ? $_POST['dir'] : null ));
