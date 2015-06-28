@@ -1,12 +1,31 @@
 jQueryFileTree
 ==============
 
-##### NOTE: v2.0.0 is written in CoffeeScript and LESS. Now supports Bower and Gulp (for compiling). View CHANGELOG.md to read more.
+##### NOTE:
 
+__v2.x.x is written in CoffeeScript and LESS. Now supports Bower and Gulp (for compiling).
+View CHANGELOG.md to read more.__
+
+
+DEMO
+====
+[http://jqueryfiletree.github.io/](http://jqueryfiletree.github.io/)
+
+
+INSTALLING
+==========
+__Bower:__ `bower install jqueryfiletree --save`
+
+__Manual:__ [Download ZIP](https://github.com/jqueryfiletree/jqueryfiletree/archive/master.zip)
+
+
+ABOUT
+=====
 
 jQueryFileTree is a configurable, AJAX file browser plugin for jQuery. This repo is a continuation of unmaintained jQuery File Tree (12 April 2008) by Cory S.N. LaViska at ABeautifulSite.net
 
 jQueryFileTree requires at least jQuery 1.2
+
 
 FEATURES
 ========
@@ -25,22 +44,22 @@ FEATURES
 * Multi-select select with checkboxes
 * Supports event listening on unique actions
 
-INSTALLING
-==========
-`bower install jqueryfiletree --save`
 
 CREATING A FILE TREE
 ====================
 
 In it’s simplest form, you can create a file tree using the following code:
 
+```javascript
 	$(document).ready( function() {
 		$('.class').fileTree({ root: '/some/folder/' }, function(file) {
 			alert(file);
 		});
 	});
+```
 
 Where .class is the class of an empty DIV element that exists on your page. The file tree will automatically load when your page loads. Any DIV elements with this class will share the same file tree.
+
 
 CONFIGURING THE FILE TREE
 =========================
@@ -55,8 +74,8 @@ Parameters are passed as an object to the fileTree() function. Valid options inc
 	<tr> <td>folderEvent</td> <td>event to trigger expand/collapse</td> <td>"click"</td> </tr>
 	<tr> <td>expandSpeed</td> <td>Speed to expand branches (in ms); use -1 for no animation</td> <td>500</td> </tr>
 	<tr> <td>collapseSpeed</td> <td>Speed to collapse branches (in ms); use -1 for no animation</td> <td>500</td> </tr>
-	<tr> <td>expandEasing \*</td> <td>Easing function to use on expand</td> <td>"swing"</td> </tr>
-	<tr> <td>collapseEasing \*</td> <td>Easing function to use on collapse</td> <td>"swing"</td> </tr>
+	<tr> <td>expandEasing \* </td> <td>Easing function to use on expand</td> <td>"swing"</td> </tr>
+	<tr> <td>collapseEasing \* </td> <td>Easing function to use on collapse</td> <td>"swing"</td> </tr>
 	<tr> <td>multiFolder</td> <td>Whether or not to limit the browser to one subfolder at a time</td> <td>true</td> </tr>
 	<tr> <td>loadMessage</td> <td>Message to display while initial tree loads (can be HTML)</td> <td>"Loading..."</td> </tr>
 	<tr> <td>errorMessage</td> <td>Message to display if unable to load tree</td> <td>"Unable to get file tree information"</td> </tr>
@@ -70,6 +89,7 @@ Parameters are passed as an object to the fileTree() function. Valid options inc
 
 There are many options available, which would look something like this:
 
+```javascript
 	$(document).ready( function() {
 		$('.class').fileTree({
 			root: '/some/folder/',
@@ -81,6 +101,7 @@ There are many options available, which would look something like this:
 			alert(file);
 		});
 	});
+```
 
 
 STYLING THE FILE TREE
@@ -113,23 +134,27 @@ CUSTOM CONNECTOR SCRIPTS
 ========================
 You can create a custom connector script to extend the functionality of the file tree. The easiest way to do this is probably by modifying one of the scripts supplied in the download. If you want to start from scratch, your script should accept one POST variable (dir) and output an unsorted list in the following format:
 
+```html
 	<ul class="jqueryFileTree">
 		<li class="directory collapsed"><a href="#" rel="/this/folder/">Folder Name</a></li>
 		(additional folders here)
 		<li class="file ext_txt"><a href="#" rel="/this/folder/filename.txt">filename.txt</a></li>
 		(additional files here)
 	</ul>
+```
 
 Note that the corresponding file extension should be written as a class of the li element, prefixed with ext_. (The prefix is used to prevent invalid class names for file extensions that begin with non-alpha characters.)
 
 Additionally you may choose to enable multi-select, which appends a checkbox to each item. Visible child elements will automatically be checked/unchecked along with the parent. Currently this is only supported in PHP; feel free to update other connectors to reflect the following format:
 
+```html
 	<ul class="jqueryFileTree">
 		<li class="directory collapsed"><input type='checkbox' /><a href="#" rel="/this/folder/">Folder Name</a></li>
 		(additional folders here)
 		<li class="file ext_txt"><input type='checkbox' /><a href="#" rel="/this/folder/filename.txt">filename.txt</a></li>
 		(additional files here)
 	</ul>
+```
 
 
 EVENTS
@@ -162,9 +187,11 @@ All return the data object with the following properties
 
 Pretty much has the information you need, but I included the LI object anyways so you can easily get any other data you want with something like ``` data.li.prop('class') ```.
 
+
 LICENSING & TERMS OF USE
 ========================
 This plugin is dual-licensed under the GNU General Public License and the MIT License and is copyright 2008 A Beautiful Site, LLC.
+
 
 TESTING
 =======
@@ -174,6 +201,7 @@ In order to test, you'll need Bower and Gulp. Right now, I just have a manual br
 * `gulp coffee` will compile `/src/coffeescript/jQueryFileTree.coffee` to JS, minify, and copy to `/dist/` as well as the testing folder (if testing is set up). A non-minified version is saved to `/src/` for debugging the output.
 * `gulp less` will compile `/src/less/jQueryFileTree.less` to CSS, minify, and copy to `/dist/` as well as the testing folder (if testing is set up). A non-minified version is saved to `/src/` for debugging the output.
 * `gulp` or `gulp default` will run `coffee`, `less`, and `tests` consecutively.
+
 
 SPECIAL THANKS
 ==============
