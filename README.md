@@ -1,5 +1,6 @@
 jQueryFileTree
 ==============
+[![GitHub version](https://badge.fury.io/gh/jqueryfiletree%2Fjqueryfiletree.svg)](http://badge.fury.io/gh/jqueryfiletree%2Fjqueryfiletree)
 
 ##### NOTE:
 
