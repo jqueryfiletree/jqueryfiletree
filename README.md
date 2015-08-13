@@ -4,7 +4,7 @@ jQueryFileTree
 
 ##### NOTE:
 
-__v2.x.x is written in CoffeeScript and LESS. Now supports Bower and Gulp (for compiling).
+__v2 is written in CoffeeScript and LESS. Now supports Bower and Gulp (for compiling).
 View CHANGELOG.md to read more.__
 
 
@@ -168,8 +168,6 @@ $('.filetree')
 	.on('filetreeexpanded', function (e, data)	{ console.log(data); })
 	.on('filetreecollapsed', function (e, data)	{ console.log(data); })
 	.on('filetreecollapse', function (e, data)	{ console.log(data); })
-	.on('filetreechecked', function (e, data)	{ console.log(data); })
-	.on('filetreeunchecked', function (e, data)	{ console.log(data); })
 	.on('filetreeclicked', function(e, data)	{ console.log(data); });
 ```
 
@@ -198,10 +196,9 @@ TESTING
 =======
 In order to test, you'll need Bower and Gulp. Right now, I just have a manual browser demo to test functionality.
 * In Terminal, go to the `/tests/manual/` folder and type `bower install` to set up the Bower assets.
-* Go to the main project folder and type `gulp tests` to set up the testing assets. Use this command any time the connectors and/or images are changed.
 * `gulp coffee` will compile `/src/coffeescript/jQueryFileTree.coffee` to JS, minify, and copy to `/dist/` as well as the testing folder (if testing is set up). A non-minified version is saved to `/src/` for debugging the output.
 * `gulp less` will compile `/src/less/jQueryFileTree.less` to CSS, minify, and copy to `/dist/` as well as the testing folder (if testing is set up). A non-minified version is saved to `/src/` for debugging the output.
-* `gulp` or `gulp default` will run `coffee`, `less`, and `tests` consecutively.
+* `gulp` or `gulp default` will run `coffee` and `less` consecutively, then update the manual test folder.
 
 
 SPECIAL THANKS
