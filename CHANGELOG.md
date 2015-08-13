@@ -1,3 +1,8 @@
+### 2.0.2 - 08/13/2015
+* Add javascript function as possible data source (#19)
+* Some gulpfile.js modifications
+* README updated
+
 ### 2.0.1 - 06/24/2015
 * Fixing test CSS URL issue
 * Moved repo to its own named organization and now using that name style throughout this project (jQueryFileTree)
