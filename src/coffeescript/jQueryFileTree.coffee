@@ -62,13 +62,7 @@ do($ = window.jQuery, window) ->
                 onlyFiles: options.onlyFiles
                 multiSelect: options.multiSelect
 
-            $.ajax
-                url: options.script
-                type: 'POST'
-                dataType: 'HTML'
-                data: data
-            .done (result) ->
-
+            handleResult = (result) ->
                 $el.find('.start').html('')
                 $el.removeClass('wait').append(result)
                 if options.root == dir
@@ -88,11 +82,28 @@ do($ = window.jQuery, window) ->
                         $(this).parent().addClass('selected')
 
                 _this.bindTree($el)
-            .fail () ->
+
+            handleFail = () ->
                 $el.find('.start').html('')
                 $el.removeClass('wait').append("<p>"+options.errorMessage+"</p>")
                 return false
 
+            if typeof options.script is 'function'
+                result = options.script(data)
+                if typeof result is 'string' or result instanceof jQuery
+                    handleResult(result)
+                else
+                    handleFail()
+            else
+                $.ajax
+                    url: options.script
+                    type: 'POST'
+                    dataType: 'HTML'
+                    data: data
+                .done (result) ->
+                    handleResult(result)
+                .fail () ->
+                    handleFail()
         # end showTree()
 
         bindTree: (el) ->

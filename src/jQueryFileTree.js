@@ -1,4 +1,3 @@
-
 /*
   * jQueryFileTree Plugin
   *
@@ -43,7 +42,7 @@
     }
 
     FileTree.prototype.showTree = function(el, dir) {
-      var $el, _this, data, options;
+      var $el, _this, data, handleFail, handleResult, options, result;
       $el = $(el);
       options = this.options;
       _this = this;
@@ -55,12 +54,7 @@
         onlyFiles: options.onlyFiles,
         multiSelect: options.multiSelect
       };
-      return $.ajax({
-        url: options.script,
-        type: 'POST',
-        dataType: 'HTML',
-        data: data
-      }).done(function(result) {
+      handleResult = function(result) {
         var li;
         $el.find('.start').html('');
         $el.removeClass('wait').append(result);
@@ -84,11 +78,31 @@
           });
         }
         return _this.bindTree($el);
-      }).fail(function() {
+      };
+      handleFail = function() {
         $el.find('.start').html('');
         $el.removeClass('wait').append("<p>" + options.errorMessage + "</p>");
         return false;
-      });
+      };
+      if (typeof options.script === 'function') {
+        result = options.script(data);
+        if (typeof result === 'string' || result instanceof jQuery) {
+          return handleResult(result);
+        } else {
+          return handleFail();
+        }
+      } else {
+        return $.ajax({
+          url: options.script,
+          type: 'POST',
+          dataType: 'HTML',
+          data: data
+        }).done(function(result) {
+          return handleResult(result);
+        }).fail(function() {
+          return handleFail();
+        });
+      }
     };
 
     FileTree.prototype.bindTree = function(el) {
