@@ -12,6 +12,7 @@ UL.jqueryFileTree LI {
   padding-left: 20px;
   margin: 0;
   white-space: nowrap;
+  cursor:pointer;
 }
 UL.jqueryFileTree LI.directory {
   background: url(images/directory.png) left top no-repeat;

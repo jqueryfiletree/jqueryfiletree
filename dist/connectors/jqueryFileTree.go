@@ -28,9 +28,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if false == noHidden || f.Name()[0] != '.' {
 			p := path.Join(dir, f.Name())
 			if true == f.IsDir() {
-				out += fmt.Sprintf(`<li class="directory collapsed"><a href="#" rel="%s">%s</a></li>`, p+"/", f.Name())
+				out += fmt.Sprintf(`<li class="directory collapsed"><a rel="%s">%s</a></li>`, p+"/", f.Name())
 			} else {
-				out += fmt.Sprintf(`<li class="file ext_%s"><a href="#" rel="%s">%s</a></li>`, path.Ext(f.Name())[1:], p, f.Name())
+				out += fmt.Sprintf(`<li class="file ext_%s"><a rel="%s">%s</a></li>`, path.Ext(f.Name())[1:], p, f.Name())
 			}
 		}
 	}

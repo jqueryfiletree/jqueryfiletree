@@ -31,7 +31,7 @@
 		// All dirs
 		for (String file : files) {
 		    if (new File(dir, file).isDirectory()) {
-				out.print("<li class=\"directory collapsed\"><a href=\"#\" rel=\"" + dir + file + "/\">"
+				out.print("<li class=\"directory collapsed\"><a rel=\"" + dir + file + "/\">"
 					+ file + "</a></li>");
 		    }
 		}
@@ -40,7 +40,7 @@
 		    if (!new File(dir, file).isDirectory()) {
 				int dotIndex = file.lastIndexOf('.');
 				String ext = dotIndex > 0 ? file.substring(dotIndex + 1) : "";
-				out.print("<li class=\"file ext_" + ext + "\"><a href=\"#\" rel=\"" + dir + file + "\">"
+				out.print("<li class=\"file ext_" + ext + "\"><a rel=\"" + dir + file + "\">"
 					+ file + "</a></li>");
 		    	}
 		}

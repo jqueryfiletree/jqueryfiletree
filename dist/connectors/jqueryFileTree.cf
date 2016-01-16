@@ -11,9 +11,9 @@ By Tjarko Rikkerink (http://carlosgallupa.com/)
 <ul class="jqueryFileTree" style="display: none;">
        <cfoutput query="qDir">
                <cfif type eq "dir">
-                   <li class="directory collapsed"><a href="##" rel="#URLDecode(form.dir)##name#/">#name#</a></li>
+                   <li class="directory collapsed"><a rel="#URLDecode(form.dir)##name#/">#name#</a></li>
                <cfelseif type eq "file">
-               <li class="file ext_#listLast(name,'.')#"><a href="##" rel="#URLDecode(form.dir)##name#">#name# (#round(size/1024)#KB)</a></li>
+               <li class="file ext_#listLast(name,'.')#"><a rel="#URLDecode(form.dir)##name#">#name# (#round(size/1024)#KB)</a></li>
                </cfif>
        </cfoutput>
 </ul>
