@@ -49,7 +49,7 @@ print "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
 foreach my $file (sort @folders) {
     next if ! -e  $fullDir . $file;
     
-    print '<li class="directory collapsed"><a href="#" rel="' . 
+    print '<li class="directory collapsed"><a rel="' . 
           &HTML::Entities::encode($dir . $file) . '/">' . 
           &HTML::Entities::encode($file) . '</a></li>';
 }
@@ -60,7 +60,7 @@ foreach my $file (sort @files) {
 
     $file =~ /\.(.+)$/;
     my $ext = $1;
-    print '<li class="file ext_' . $ext . '"><a href="#" rel="' . 
+    print '<li class="file ext_' . $ext . '"><a rel="' . 
     &HTML::Entities::encode($dir . $file) . '/">' .
     &HTML::Entities::encode($file) . '</a></li>';
 }

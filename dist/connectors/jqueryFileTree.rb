@@ -40,7 +40,7 @@ begin
 		Dir.glob("*") {
 			|x|
 			if not File.directory?(x.untaint) then next end 
-			puts "<li class=\"directory collapsed\"><a href=\"#\" rel=\"#{dir}#{x}/\">#{x}</a></li>";
+			puts "<li class=\"directory collapsed\"><a rel=\"#{dir}#{x}/\">#{x}</a></li>";
 		}
 
 		#loop through all files
@@ -48,7 +48,7 @@ begin
 			|x|
 			if not File.file?(x.untaint) then next end 
 			ext = File.extname(x)[1..-1]
-			puts "<li class=\"file ext_#{ext}\"><a href=\"#\" rel=\"#{dir}#{x}\">#{x}</a></li>"
+			puts "<li class=\"file ext_#{ext}\"><a rel=\"#{dir}#{x}\">#{x}</a></li>"
 		}
 	else
 		#only happens when someone tries to go outside your root directory...

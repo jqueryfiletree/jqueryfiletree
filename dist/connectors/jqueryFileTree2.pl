@@ -39,10 +39,10 @@ closedir($dir_handle);
 
 print "<ul class=\"jqueryFileTree\">\n";
 foreach my $directory (sort @directories) {
-    print "        <li class=\"directory collapsed\">$checkbox<a href=\"#\" rel=\"$dir_path/$directory/\">$directory</a></li>\n";
+    print "        <li class=\"directory collapsed\">$checkbox<a rel=\"$dir_path/$directory/\">$directory</a></li>\n";
 }
 foreach my $file (sort @files) {
     my $file_ext = (split /\./, $file)[1] || "";
-    print "        <li class=\"file ext_${file_ext}\">$checkbox<a href=\"#\" rel=\"$dir_path/$file\">$file</a></li>\n";
+    print "        <li class=\"file ext_${file_ext}\">$checkbox<a rel=\"$dir_path/$file\">$file</a></li>\n";
 }
 print "</ul>\n";

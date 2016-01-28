@@ -24,7 +24,7 @@ if ObjFSO.FolderExists(BaseFile) then
        For Each ObjSubFolder In ObjFolder.SubFolders
                i__Name=ObjSubFolder.name
                Html = Html + "<li class=""directory collapsed"">"&_
-                                         "<a href=""#"" rel="""+(BaseFileDir+i__Name+"/")+""">"&_
+                                         "<a rel="""+(BaseFileDir+i__Name+"/")+""">"&_
                                          (i__Name)+"</a></li>"&VBCRLF
        Next
        'LOOP THROUGH FILES
@@ -34,7 +34,7 @@ if ObjFSO.FolderExists(BaseFile) then
                ' extension
                i__Ext = LCase(Mid(i__Name, InStrRev(i__Name, ".", -1, 1) + 1))
                Html = Html + "<li class=""file ext_"&i__Ext&""">"&_
-                                         "<a href=""#"" rel="""+(BaseFileDir+i__Name)+""">"&_
+                                         "<a rel="""+(BaseFileDir+i__Name)+""">"&_
                                          (i__name)+"</a></li>"&VBCRLF
        Next
        Html = Html +  "</ul>"&VBCRLF

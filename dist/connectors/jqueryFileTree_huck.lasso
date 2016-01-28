@@ -25,10 +25,10 @@
 		#file->beginswith('.') ? loop_continue;
 	
 		if(#file->endswith('/'));
-			'<li class="directory collapsed"><a href="#" rel="' + $dir + #file + '">' + #file + '</a></li>';
+			'<li class="directory collapsed"><a rel="' + $dir + #file + '">' + #file + '</a></li>';
 		else;
 			local('ext') = #file->split('.')->last;			
-			'<li class="file ext_' + #ext + '"><a href="#" rel="' + $dir + #file + '">' + #file + '</a></li>';
+			'<li class="file ext_' + #ext + '"><a rel="' + $dir + #file + '">' + #file + '</a></li>';
 		/if;
 	/iterate;
 	
