@@ -11,7 +11,7 @@ var fs = require('fs');
 // compile LESS
 gulp.task('less', function () {
     // jqueryfiletree assets
-    gulp.src('src/less/*.less')
+    return gulp.src('src/less/*.less')
         //.pipe(changed('dist'), {extension: '.min.css'})
         .pipe(less())
         .pipe(gulp.dest('src'))
@@ -22,11 +22,11 @@ gulp.task('less', function () {
 
 // compile coffeescript
 gulp.task('coffee', function() {
-    gulp.src('src/coffeescript/*.coffee')
+    return gulp.src('src/coffeescript/*.coffee')
         //.pipe(changed('dist'), {extension: '.min.js'})
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(gulp.dest('src'))
-        .pipe(uglify())
+        .pipe(uglify( {preserveComments: 'some'} ))
         .pipe(rename({ extname: '.min.js' }))
         .pipe(gulp.dest('dist'))
 });

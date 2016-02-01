@@ -5,3 +5,4 @@
 /tests/manual/bower_components/
 /tests/manual/css/jqft-test.css
 /tests/manual/css/skeleton.css
+node_modules

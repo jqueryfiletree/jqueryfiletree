@@ -116,7 +116,7 @@ do($ = window.jQuery, window) ->
                 \/.*\/          # get anything with forward slashes around them, ie "/images/"
                 $ ///i          # end of line and ignore case
 
-            $el.find('LI A').on options.folderEvent, () ->
+            $el.on options.folderEvent, 'li a', () ->
                 # set up data object to send back via trigger
                 data = {}
                 data.li = $(this).closest('li')
@@ -170,10 +170,6 @@ do($ = window.jQuery, window) ->
 
                 return false
             #end .on
-            # Prevent A from triggering the # on non-click events
-            if options.folderEvent.toLowerCase != 'click'
-                $el.find('LI A').on 'click', () ->
-                    return false
         # end bindTree()
 
         # wrapper to append trigger type to data

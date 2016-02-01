@@ -1,3 +1,4 @@
+
 /*
   * jQueryFileTree Plugin
   *
@@ -113,7 +114,7 @@
       _this = this;
       callback = this.callback;
       relPattern = /^\/.*\/$/i;
-      $el.find('LI A').on(options.folderEvent, function() {
+      return $el.on(options.folderEvent, 'li a', function() {
         var data, ref;
         data = {};
         data.li = $(this).closest('li');
@@ -166,11 +167,6 @@
         }
         return false;
       });
-      if (options.folderEvent.toLowerCase !== 'click') {
-        return $el.find('LI A').on('click', function() {
-          return false;
-        });
-      }
     };
 
     FileTree.prototype._trigger = function(el, eventType, data) {
