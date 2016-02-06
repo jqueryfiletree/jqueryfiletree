@@ -40,6 +40,63 @@
       this.callback = callback;
       $el.html('<ul class="jqueryFileTree start"><li class="wait">' + this.options.loadMessage + '<li></ul>');
       this.showTree($el, escape(this.options.root));
+      $el.delegate("li a", this.options.folderEvent, (function(_this) {
+        return function(event) {
+          var $ev, data, jqft, options, ref;
+          $ev = $(event.target);
+          options = _this.options;
+          jqft = _this.jqft;
+          _this = _this;
+          callback = _this.callback;
+          data = {};
+          data.li = $ev.closest('li');
+          data.type = (ref = data.li.hasClass('directory')) != null ? ref : {
+            'directory': 'file'
+          };
+          data.value = $ev.text();
+          data.rel = $ev.prop('rel');
+          data.container = jqft.container;
+          if ($ev.parent().hasClass('directory')) {
+            if ($ev.parent().hasClass('collapsed')) {
+              _this._trigger($ev, 'filetreeexpand', data);
+              if (!options.multiFolder) {
+                $ev.parent().parent().find('UL').slideUp({
+                  duration: options.collapseSpeed,
+                  easing: options.collapseEasing
+                });
+                $ev.parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
+              }
+              $ev.parent().removeClass('collapsed').addClass('expanded');
+              $ev.parent().find('UL').remove();
+              _this.showTree($ev.parent(), $ev.attr('rel'));
+              return _this._trigger($ev, 'filetreeexpanded', data);
+            } else {
+              _this._trigger($ev, 'filetreecollapse', data);
+              $ev.parent().find('UL').slideUp({
+                duration: options.collapseSpeed,
+                easing: options.collapseEasing
+              });
+              $ev.parent().removeClass('expanded').addClass('collapsed');
+              return _this._trigger($ev, 'filetreecollapsed', data);
+            }
+          } else {
+            if (!options.multiSelect) {
+              jqft.container.find('li').removeClass('selected');
+              $ev.parent().addClass('selected');
+            } else {
+              if ($ev.parent().find('input').is(':checked')) {
+                $ev.parent().find('input').prop('checked', false);
+                $ev.parent().removeClass('selected');
+              } else {
+                $ev.parent().find('input').prop('checked', true);
+                $ev.parent().addClass('selected');
+              }
+            }
+            _this._trigger($ev, 'filetreeclicked', data);
+            return typeof callback === "function" ? callback($ev.attr('rel')) : void 0;
+          }
+        };
+      })(this));
     }
 
     FileTree.prototype.showTree = function(el, dir) {
@@ -78,7 +135,7 @@
             return $(this).parent().addClass('selected');
           });
         }
-        return _this.bindTree($el);
+        return false;
       };
       handleFail = function() {
         $el.find('.start').html('');
@@ -102,74 +159,6 @@
           return handleResult(result);
         }).fail(function() {
           return handleFail();
-        });
-      }
-    };
-
-    FileTree.prototype.bindTree = function(el) {
-      var $el, _this, callback, jqft, options, relPattern;
-      $el = $(el);
-      options = this.options;
-      jqft = this.jqft;
-      _this = this;
-      callback = this.callback;
-      relPattern = /^\/.*\/$/i;
-      $el.find('LI A').on(options.folderEvent, function() {
-        var data, ref;
-        data = {};
-        data.li = $(this).closest('li');
-        data.type = (ref = data.li.hasClass('directory')) != null ? ref : {
-          'directory': 'file'
-        };
-        data.value = $(this).text();
-        data.rel = $(this).prop('rel');
-        data.container = jqft.container;
-        if ($(this).parent().hasClass('directory')) {
-          if ($(this).parent().hasClass('collapsed')) {
-            _this._trigger($(this), 'filetreeexpand', data);
-            if (!options.multiFolder) {
-              $(this).parent().parent().find('UL').slideUp({
-                duration: options.collapseSpeed,
-                easing: options.collapseEasing
-              });
-              $(this).parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
-            }
-            $(this).parent().removeClass('collapsed').addClass('expanded');
-            $(this).parent().find('UL').remove();
-            _this.showTree($(this).parent(), $(this).attr('rel').match(relPattern)[0]);
-            _this._trigger($(this), 'filetreeexpanded', data);
-          } else {
-            _this._trigger($(this), 'filetreecollapse', data);
-            $(this).parent().find('UL').slideUp({
-              duration: options.collapseSpeed,
-              easing: options.collapseEasing
-            });
-            $(this).parent().removeClass('expanded').addClass('collapsed');
-            _this._trigger($(this), 'filetreecollapsed', data);
-          }
-        } else {
-          if (!options.multiSelect) {
-            jqft.container.find('li').removeClass('selected');
-            $(this).parent().addClass('selected');
-          } else {
-            if ($(this).parent().find('input').is(':checked')) {
-              $(this).parent().find('input').prop('checked', false);
-              $(this).parent().removeClass('selected');
-            } else {
-              $(this).parent().find('input').prop('checked', true);
-              $(this).parent().addClass('selected');
-            }
-          }
-          _this._trigger($(this), 'filetreeclicked', data);
-          if (typeof callback === "function") {
-            callback($(this).attr('rel'));
-          }
-        }
-        return false;
-      });
-      if (options.folderEvent.toLowerCase() !== 'click') {
-        return $el.find('LI A').on('click', function() {
-          return false;
         });
       }
     };

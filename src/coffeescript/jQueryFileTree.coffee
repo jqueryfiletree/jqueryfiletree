@@ -45,6 +45,66 @@ do($ = window.jQuery, window) ->
 
             # Get the initial file list
             this.showTree( $el, escape(@options.root))
+            
+            # set delegate event handler for clicks
+            $el.delegate "li a", @options.folderEvent, (event) =>
+                $ev      = $(event.target)
+                options  = @options
+                jqft     = @jqft
+                _this    = @
+                callback = @callback
+
+                # set up data object to send back via trigger
+                data           = {}
+                data.li        = $ev.closest('li')
+                data.type      = ( data.li.hasClass('directory') ? 'directory' : 'file' )
+                data.value     = $ev.text()
+                data.rel       = $ev.prop('rel')
+                data.container = jqft.container
+
+                if $ev.parent().hasClass('directory')
+                    if $ev.parent().hasClass('collapsed')
+                        # Expand
+                        _this._trigger($ev, 'filetreeexpand', data)
+
+                        if !options.multiFolder
+                            $ev.parent().parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing })
+                            $ev.parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed')
+
+                        $ev.parent().removeClass('collapsed').addClass('expanded')
+                        $ev.parent().find('UL').remove() # cleanup
+                        _this.showTree $ev.parent(), $ev.attr('rel')
+
+                        # return expanded event with data - in the future this really needs to go into the slideDown complete function
+                        _this._trigger($ev, 'filetreeexpanded', data)
+                    else
+                        # Collapse
+                        _this._trigger($ev, 'filetreecollapse', data)
+
+                        $ev.parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing })
+                        $ev.parent().removeClass('expanded').addClass('collapsed')
+
+                        _this._trigger($ev, 'filetreecollapsed', data)
+                else
+                    # this is a file click, return file information
+                    if !options.multiSelect
+                        # remove "selected" class if set, then append class to currently selected file
+                        jqft.container.find('li').removeClass('selected')
+                        $ev.parent().addClass('selected')
+                    else
+                        # since it's multiselect, more than one element can have the 'selected' class
+                        if $ev.parent().find('input').is(':checked')
+                            $ev.parent().find('input').prop('checked', false)
+                            $ev.parent().removeClass('selected')
+                        else
+                            $ev.parent().find('input').prop('checked', true)
+                            $ev.parent().addClass('selected')
+
+                    _this._trigger($ev, 'filetreeclicked', data)
+
+                    # perform return
+                    callback? $ev.attr('rel')
+
 
         showTree: (el, dir) ->
 
@@ -80,8 +140,7 @@ do($ = window.jQuery, window) ->
                     li.find('ul li input').each () ->
                         $(this).prop('checked', true)
                         $(this).parent().addClass('selected')
-
-                _this.bindTree($el)
+                return false;
 
             handleFail = () ->
                 $el.find('.start').html('')
@@ -105,76 +164,6 @@ do($ = window.jQuery, window) ->
                 .fail () ->
                     handleFail()
         # end showTree()
-
-        bindTree: (el) ->
-            $el = $(el)
-            options = @options
-            jqft = @jqft
-            _this = @
-            callback = @callback
-            relPattern = /// ^  # begin of line
-                \/.*\/          # get anything with forward slashes around them, ie "/images/"
-                $ ///i          # end of line and ignore case
-
-            $el.find('LI A').on options.folderEvent, () ->
-                # set up data object to send back via trigger
-                data = {}
-                data.li = $(this).closest('li')
-                data.type = ( data.li.hasClass('directory') ? 'directory' : 'file' )
-                data.value = $(this).text()
-                data.rel = $(this).prop('rel')
-                data.container = jqft.container
-
-                if $(this).parent().hasClass('directory')
-                    if $(this).parent().hasClass('collapsed')
-                        # Expand
-                        _this._trigger($(this), 'filetreeexpand', data)
-
-                        if !options.multiFolder
-                            $(this).parent().parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing })
-                            $(this).parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed')
-
-                        $(this).parent().removeClass('collapsed').addClass('expanded')
-                        $(this).parent().find('UL').remove() # cleanup
-                        _this.showTree $(this).parent(), $(this).attr('rel').match(relPattern)[0]
-
-                        # return expanded event with data - in the future this really needs to go into the slideDown complete function
-                        _this._trigger($(this), 'filetreeexpanded', data)
-                    else
-                        # Collapse
-                        _this._trigger($(this), 'filetreecollapse', data)
-
-                        $(this).parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing })
-                        $(this).parent().removeClass('expanded').addClass('collapsed')
-
-                        _this._trigger($(this), 'filetreecollapsed', data)
-                else
-                    # this is a file click, return file information
-                    if !options.multiSelect
-                        # remove "selected" class if set, then append class to currently selected file
-                        jqft.container.find('li').removeClass('selected')
-                        $(this).parent().addClass('selected')
-                    else
-                        # since it's multiselect, more than one element can have the 'selected' class
-                        if $(this).parent().find('input').is(':checked')
-                            $(this).parent().find('input').prop('checked', false)
-                            $(this).parent().removeClass('selected')
-                        else
-                            $(this).parent().find('input').prop('checked', true)
-                            $(this).parent().addClass('selected')
-
-                    _this._trigger($(this), 'filetreeclicked', data)
-
-                    # perform return
-                    callback? $(this).attr('rel')
-
-                return false
-            #end .on
-            # Prevent A from triggering the # on non-click events
-            if options.folderEvent.toLowerCase() != 'click'
-                $el.find('LI A').on 'click', () ->
-                    return false
-        # end bindTree()
 
         # wrapper to append trigger type to data
         _trigger: (el, eventType, data) ->
