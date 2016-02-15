@@ -13,8 +13,25 @@ UL.jqueryFileTree LI {
   margin: 0;
   white-space: nowrap;
 }
+
+UL.jqueryFileTree A {
+  color: #333;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+UL.jqueryFileTree A:hover {
+  background: #BDF;
+}
+
+/* Core Styles */
 UL.jqueryFileTree LI.directory {
   background: url(images/directory.png) left top no-repeat;
+}
+UL.jqueryFileTree LI.directory-locked {
+  background: url(images/directory-lock.png) left top no-repeat;
 }
 UL.jqueryFileTree LI.expanded {
   background: url(images/folder_open.png) left top no-repeat;
@@ -22,12 +39,17 @@ UL.jqueryFileTree LI.expanded {
 UL.jqueryFileTree LI.file {
   background: url(images/file.png) left top no-repeat;
 }
+UL.jqueryFileTree LI.file-locked {
+  background: url(images/file-lock.png) left top no-repeat !important;
+}
 UL.jqueryFileTree LI.wait {
   background: url(images/spinner.gif) left top no-repeat;
 }
 UL.jqueryFileTree LI.selected > a {
   font-weight: bold;
 }
+
+/* File Extensions*/
 UL.jqueryFileTree LI.ext_3gp {
   background: url(images/film.png) left top no-repeat;
 }
@@ -127,6 +149,12 @@ UL.jqueryFileTree LI.ext_mpg {
 UL.jqueryFileTree LI.ext_mpeg {
   background: url(images/film.png) left top no-repeat;
 }
+UL.jqueryFileTree LI.ext_ogv {
+  background: url(images/film.png) left top no-repeat;
+}
+UL.jqueryFileTree LI.ext_webm {
+  background: url(images/film.png) left top no-repeat;
+}
 UL.jqueryFileTree LI.ext_ogg {
   background: url(images/music.png) left top no-repeat;
 }
@@ -201,14 +229,4 @@ UL.jqueryFileTree LI.ext_xml {
 }
 UL.jqueryFileTree LI.ext_zip {
   background: url(images/zip.png) left top no-repeat;
-}
-UL.jqueryFileTree A {
-  color: #333;
-  text-decoration: none;
-  display: inline-block;
-  padding: 0 2px;
-  cursor: pointer;
-}
-UL.jqueryFileTree A:hover {
-  background: #BDF;
 }
