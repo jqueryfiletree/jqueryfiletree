@@ -61,6 +61,10 @@
         $el.removeClass('wait').append(result);
         if (options.root === dir) {
           $el.find('UL:hidden').show(typeof callback !== "undefined" && callback !== null);
+          _this._trigger($el, 'afterInitTree', {
+            container: _this.jqft.container,
+            options: options
+          });
         } else {
           if (jQuery.easing[options.expandEasing] === void 0) {
             console.log('Easing library not loaded. Include jQueryUI or 3rd party lib.');
@@ -124,6 +128,7 @@
         data.value = $(this).text();
         data.rel = $(this).prop('rel');
         data.container = jqft.container;
+        data.options = options;
         if ($(this).parent().hasClass('directory')) {
           if ($(this).parent().hasClass('collapsed')) {
             _this._trigger($(this), 'filetreeexpand', data);
@@ -172,6 +177,10 @@
           return false;
         });
       }
+      _this._trigger($el, 'afterShowTree', {
+        container: jqft.container,
+        options: options
+      });
     };
 
     FileTree.prototype._trigger = function(el, eventType, data) {
