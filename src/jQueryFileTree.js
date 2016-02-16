@@ -69,7 +69,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         if ($ev.parent().hasClass('collapsed')) {
           if (!options.multiFolder) {
             $ev.parent().parent().find('UL').slideUp({
-              speed: options.collapseSpeed,
+              duration: options.collapseSpeed,
               easing: options.collapseEasing
             });
             $ev.parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
@@ -82,7 +82,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           });
         } else {
           return $ev.parent().find('UL').slideUp({
-            speed: options.collapseSpeed,
+            duration: options.collapseSpeed,
             easing: options.collapseEasing,
             start: function() {
               return _this._trigger('filetreecollapse', _this.data);
@@ -137,7 +137,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
             options.expandEasing = 'swing';
           }
           $el.find('UL:hidden').slideDown({
-            speed: options.expandSpeed,
+            duration: options.expandSpeed,
             easing: options.expandEasing,
             start: function() {
               return _this._trigger('filetreeexpand', _this.data);
