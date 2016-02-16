@@ -137,7 +137,8 @@ do($ = window.jQuery, window) ->
                 $el.find('.start').html('')
                 $el.removeClass('wait').append( result )
                 if options.root == dir
-                    $el.find('UL:hidden').show( callback? )
+                    $el.find('UL:hidden').show( )
+                    finishCallback()
                 else
                     # ensure an easing library is loaded if custom easing is used
                     if jQuery.easing[options.expandEasing] == undefined

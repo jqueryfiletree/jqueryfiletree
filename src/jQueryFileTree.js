@@ -130,7 +130,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         $el.find('.start').html('');
         $el.removeClass('wait').append(result);
         if (options.root === dir) {
-          $el.find('UL:hidden').show(typeof callback !== "undefined" && callback !== null);
+          $el.find('UL:hidden').show();
+          finishCallback();
         } else {
           if (jQuery.easing[options.expandEasing] === void 0) {
             console.log('Easing library not loaded. Include jQueryUI or 3rd party lib.');
