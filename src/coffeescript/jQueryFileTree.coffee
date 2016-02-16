@@ -2,7 +2,7 @@
  # jQueryFileTree Plugin
  #
  # @author - Cory S.N. LaViska - A Beautiful Site (http://abeautifulsite.net/) - 24 March 2008
- # @author - Dave Rogers - https://github.com/daverogers/jQueryFileTree
+ # @author - Dave Rogers - (https://github.com/daverogers/)
  #
  # Usage: $('.fileTreeDemo').fileTree({ options }, callback )
  #
@@ -19,6 +19,7 @@ do($ = window.jQuery, window) ->
 
         constructor: (el, args, callback) ->
             $el = $(el)
+            _this = @
             defaults = {
                 root: '/'
                 script: '/files/filetree'
@@ -39,74 +40,85 @@ do($ = window.jQuery, window) ->
             }
             @options = $.extend(defaults, args)
             @callback = callback
+            @data = {}
 
             # Loading message
             $el.html('<ul class="jqueryFileTree start"><li class="wait">' + @options.loadMessage + '<li></ul>')
 
             # Get the initial file list
-            this.showTree( $el, escape(@options.root))
-            
+            _this.showTree( $el, escape(@options.root), () ->
+                _this._trigger('filetreeinitiated', {})
+            )
+
             # set delegate event handler for clicks
-            $el.delegate "li a", @options.folderEvent, (event) =>
-                $ev      = $(event.target)
-                options  = @options
-                jqft     = @jqft
-                _this    = @
-                callback = @callback
+            $el.delegate "li a", @options.folderEvent, _this.onEvent
 
-                # set up data object to send back via trigger
-                data           = {}
-                data.li        = $ev.closest('li')
-                data.type      = ( data.li.hasClass('directory') ? 'directory' : 'file' )
-                data.value     = $ev.text()
-                data.rel       = $ev.prop('rel')
-                data.container = jqft.container
 
-                if $ev.parent().hasClass('directory')
-                    if $ev.parent().hasClass('collapsed')
-                        # Expand
-                        _this._trigger($ev, 'filetreeexpand', data)
+        onEvent: (event) =>
+            $ev      = $(event.target)
+            options  = @options
+            jqft     = @jqft
+            _this    = @
+            callback = @callback
+            
+            # set up data object to send back via trigger
+            _this.data           = {}
+            _this.data.li        = $ev.closest('li')
+            _this.data.type      = ( _this.data.li.hasClass('directory') ? 'directory' : 'file' )
+            _this.data.value     = $ev.text()
+            _this.data.rel       = $ev.prop('rel')
+            _this.data.container = jqft.container
 
-                        if !options.multiFolder
-                            $ev.parent().parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing })
-                            $ev.parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed')
+            if $ev.parent().hasClass('directory')
+                if $ev.parent().hasClass('collapsed')
+                    # Expand
+                    if !options.multiFolder
+                        $ev.parent().parent().find('UL').slideUp { 
+                            speed: options.collapseSpeed, 
+                            easing: options.collapseEasing
+                        }
+                        $ev.parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed')
 
-                        $ev.parent().removeClass('collapsed').addClass('expanded')
-                        $ev.parent().find('UL').remove() # cleanup
-                        _this.showTree $ev.parent(), $ev.attr('rel')
-
-                        # return expanded event with data - in the future this really needs to go into the slideDown complete function
-                        _this._trigger($ev, 'filetreeexpanded', data)
-                    else
-                        # Collapse
-                        _this._trigger($ev, 'filetreecollapse', data)
-
-                        $ev.parent().find('UL').slideUp({ duration: options.collapseSpeed, easing: options.collapseEasing })
-                        $ev.parent().removeClass('expanded').addClass('collapsed')
-
-                        _this._trigger($ev, 'filetreecollapsed', data)
+                    $ev.parent().removeClass('collapsed').addClass('expanded')
+                    $ev.parent().find('UL').remove() # cleanup
+                    _this.showTree $ev.parent(), $ev.attr('rel'), ->
+                        # return expanded event with data
+                        _this._trigger('filetreeexpanded', _this.data)
+                        callback?
                 else
-                    # this is a file click, return file information
-                    if !options.multiSelect
-                        # remove "selected" class if set, then append class to currently selected file
-                        jqft.container.find('li').removeClass('selected')
-                        $ev.parent().addClass('selected')
+                    # Collapse
+                    $ev.parent().find('UL').slideUp {
+                        speed: options.collapseSpeed, 
+                        easing: options.collapseEasing, 
+                        start: ->
+                            _this._trigger('filetreecollapse', _this.data)
+                        complete: ->
+                            $ev.parent().removeClass('expanded').addClass('collapsed')
+                            _this._trigger('filetreecollapsed', _this.data)
+                            callback?
+                    }
+            else
+                # this is a file click, return file information
+                if !options.multiSelect
+                    # remove "selected" class if set, then append class to currently selected file
+                    jqft.container.find('li').removeClass('selected')
+                    $ev.parent().addClass('selected')
+                else
+                    # since it's multiselect, more than one element can have the 'selected' class
+                    if $ev.parent().find('input').is(':checked')
+                        $ev.parent().find('input').prop('checked', false)
+                        $ev.parent().removeClass('selected')
                     else
-                        # since it's multiselect, more than one element can have the 'selected' class
-                        if $ev.parent().find('input').is(':checked')
-                            $ev.parent().find('input').prop('checked', false)
-                            $ev.parent().removeClass('selected')
-                        else
-                            $ev.parent().find('input').prop('checked', true)
-                            $ev.parent().addClass('selected')
+                        $ev.parent().find('input').prop('checked', true)
+                        $ev.parent().addClass('selected')
 
-                    _this._trigger($ev, 'filetreeclicked', data)
+                _this._trigger('filetreeclicked', _this.data)
 
-                    # perform return
-                    callback? $ev.attr('rel')
+                # perform return
+                callback? $ev.attr('rel')
 
 
-        showTree: (el, dir) ->
+        showTree: (el, dir, finishCallback) ->
 
             $el = $(el)
             options = @options
@@ -115,7 +127,6 @@ do($ = window.jQuery, window) ->
             $el.addClass('wait')
             $(".jqueryFileTree.start").remove()
 
-            # do yo' voodoo magic white boy
             data =
                 dir: dir
                 onlyFolders: options.onlyFolders
@@ -124,7 +135,7 @@ do($ = window.jQuery, window) ->
 
             handleResult = (result) ->
                 $el.find('.start').html('')
-                $el.removeClass('wait').append(result)
+                $el.removeClass('wait').append( result )
                 if options.root == dir
                     $el.find('UL:hidden').show( callback? )
                 else
@@ -132,8 +143,13 @@ do($ = window.jQuery, window) ->
                     if jQuery.easing[options.expandEasing] == undefined
                         console.log 'Easing library not loaded. Include jQueryUI or 3rd party lib.'
                         options.expandEasing = 'swing' # revert to swing (default)
-                    $el.find('UL:hidden').slideDown { duration: options.expandSpeed, easing: options.expandEasing }
-
+                    $el.find('UL:hidden').slideDown {
+                        speed: options.expandSpeed,
+                        easing: options.expandEasing,
+                        start: ->
+                            _this._trigger('filetreeexpand', _this.data)
+                        complete: finishCallback
+                    }
                 # if multiselect is on and the parent folder is selected, propagate check to child elements
                 li = $('[rel="'+decodeURIComponent(dir)+'"]').parent()
                 if options.multiSelect && li.children('input').is(':checked')
@@ -166,9 +182,10 @@ do($ = window.jQuery, window) ->
         # end showTree()
 
         # wrapper to append trigger type to data
-        _trigger: (el, eventType, data) ->
-            $el = $(el)
-            $el.trigger(eventType, data)
+        _trigger: (eventType, data) ->
+            $el = @jqft.container
+            $el.triggerHandler(eventType, data)
+
 
     # Define the plugin
     $.fn.extend fileTree: (args, callback) ->

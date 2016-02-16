@@ -164,6 +164,7 @@ jQueryFileTree now supports binding event listeners to the file tree element
 
 ```javascript
 $('.filetree')
+	.on('filetreeinitiated', function(e, data)	{ console.log(data); });
 	.on('filetreeexpand', function (e, data)	{ console.log(data); })
 	.on('filetreeexpanded', function (e, data)	{ console.log(data); })
 	.on('filetreecollapsed', function (e, data)	{ console.log(data); })
@@ -171,7 +172,7 @@ $('.filetree')
 	.on('filetreeclicked', function(e, data)	{ console.log(data); });
 ```
 
-All return the data object with the following properties
+All except 'filetreeinitiated' return the data object with the following properties
 
 <table>
 <tr>

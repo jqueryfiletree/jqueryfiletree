@@ -3,7 +3,7 @@
   * jQueryFileTree Plugin
   *
   * @author - Cory S.N. LaViska - A Beautiful Site (http://abeautifulsite.net/) - 24 March 2008
-  * @author - Dave Rogers - https://github.com/daverogers/jQueryFileTree
+  * @author - Dave Rogers - (https://github.com/daverogers/)
   *
   * Usage: $('.fileTreeDemo').fileTree({ options }, callback )
   *
@@ -12,12 +12,16 @@
   * This plugin is dual-licensed under the GNU General Public License and the MIT License and
   * is copyright 2008 A Beautiful Site, LLC.
  */
+var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
 (function($, window) {
   var FileTree;
   FileTree = (function() {
     function FileTree(el, args, callback) {
-      var $el, defaults;
+      this.onEvent = bind(this.onEvent, this);
+      var $el, _this, defaults;
       $el = $(el);
+      _this = this;
       defaults = {
         root: '/',
         script: '/files/filetree',
@@ -38,68 +42,77 @@
       };
       this.options = $.extend(defaults, args);
       this.callback = callback;
+      this.data = {};
       $el.html('<ul class="jqueryFileTree start"><li class="wait">' + this.options.loadMessage + '<li></ul>');
-      this.showTree($el, escape(this.options.root));
-      $el.delegate("li a", this.options.folderEvent, (function(_this) {
-        return function(event) {
-          var $ev, data, jqft, options, ref;
-          $ev = $(event.target);
-          options = _this.options;
-          jqft = _this.jqft;
-          _this = _this;
-          callback = _this.callback;
-          data = {};
-          data.li = $ev.closest('li');
-          data.type = (ref = data.li.hasClass('directory')) != null ? ref : {
-            'directory': 'file'
-          };
-          data.value = $ev.text();
-          data.rel = $ev.prop('rel');
-          data.container = jqft.container;
-          if ($ev.parent().hasClass('directory')) {
-            if ($ev.parent().hasClass('collapsed')) {
-              _this._trigger($ev, 'filetreeexpand', data);
-              if (!options.multiFolder) {
-                $ev.parent().parent().find('UL').slideUp({
-                  duration: options.collapseSpeed,
-                  easing: options.collapseEasing
-                });
-                $ev.parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
-              }
-              $ev.parent().removeClass('collapsed').addClass('expanded');
-              $ev.parent().find('UL').remove();
-              _this.showTree($ev.parent(), $ev.attr('rel'));
-              return _this._trigger($ev, 'filetreeexpanded', data);
-            } else {
-              _this._trigger($ev, 'filetreecollapse', data);
-              $ev.parent().find('UL').slideUp({
-                duration: options.collapseSpeed,
-                easing: options.collapseEasing
-              });
-              $ev.parent().removeClass('expanded').addClass('collapsed');
-              return _this._trigger($ev, 'filetreecollapsed', data);
-            }
-          } else {
-            if (!options.multiSelect) {
-              jqft.container.find('li').removeClass('selected');
-              $ev.parent().addClass('selected');
-            } else {
-              if ($ev.parent().find('input').is(':checked')) {
-                $ev.parent().find('input').prop('checked', false);
-                $ev.parent().removeClass('selected');
-              } else {
-                $ev.parent().find('input').prop('checked', true);
-                $ev.parent().addClass('selected');
-              }
-            }
-            _this._trigger($ev, 'filetreeclicked', data);
-            return typeof callback === "function" ? callback($ev.attr('rel')) : void 0;
-          }
-        };
-      })(this));
+      _this.showTree($el, escape(this.options.root), function() {
+        return _this._trigger('filetreeinitiated', {});
+      });
+      $el.delegate("li a", this.options.folderEvent, _this.onEvent);
     }
 
-    FileTree.prototype.showTree = function(el, dir) {
+    FileTree.prototype.onEvent = function(event) {
+      var $ev, _this, callback, jqft, options, ref;
+      $ev = $(event.target);
+      options = this.options;
+      jqft = this.jqft;
+      _this = this;
+      callback = this.callback;
+      _this.data = {};
+      _this.data.li = $ev.closest('li');
+      _this.data.type = (ref = _this.data.li.hasClass('directory')) != null ? ref : {
+        'directory': 'file'
+      };
+      _this.data.value = $ev.text();
+      _this.data.rel = $ev.prop('rel');
+      _this.data.container = jqft.container;
+      if ($ev.parent().hasClass('directory')) {
+        if ($ev.parent().hasClass('collapsed')) {
+          if (!options.multiFolder) {
+            $ev.parent().parent().find('UL').slideUp({
+              speed: options.collapseSpeed,
+              easing: options.collapseEasing
+            });
+            $ev.parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
+          }
+          $ev.parent().removeClass('collapsed').addClass('expanded');
+          $ev.parent().find('UL').remove();
+          return _this.showTree($ev.parent(), $ev.attr('rel'), function() {
+            _this._trigger('filetreeexpanded', _this.data);
+            return callback != null;
+          });
+        } else {
+          return $ev.parent().find('UL').slideUp({
+            speed: options.collapseSpeed,
+            easing: options.collapseEasing,
+            start: function() {
+              return _this._trigger('filetreecollapse', _this.data);
+            },
+            complete: function() {
+              $ev.parent().removeClass('expanded').addClass('collapsed');
+              _this._trigger('filetreecollapsed', _this.data);
+              return callback != null;
+            }
+          });
+        }
+      } else {
+        if (!options.multiSelect) {
+          jqft.container.find('li').removeClass('selected');
+          $ev.parent().addClass('selected');
+        } else {
+          if ($ev.parent().find('input').is(':checked')) {
+            $ev.parent().find('input').prop('checked', false);
+            $ev.parent().removeClass('selected');
+          } else {
+            $ev.parent().find('input').prop('checked', true);
+            $ev.parent().addClass('selected');
+          }
+        }
+        _this._trigger('filetreeclicked', _this.data);
+        return typeof callback === "function" ? callback($ev.attr('rel')) : void 0;
+      }
+    };
+
+    FileTree.prototype.showTree = function(el, dir, finishCallback) {
       var $el, _this, data, handleFail, handleResult, options, result;
       $el = $(el);
       options = this.options;
@@ -124,8 +137,12 @@
             options.expandEasing = 'swing';
           }
           $el.find('UL:hidden').slideDown({
-            duration: options.expandSpeed,
-            easing: options.expandEasing
+            speed: options.expandSpeed,
+            easing: options.expandEasing,
+            start: function() {
+              return _this._trigger('filetreeexpand', _this.data);
+            },
+            complete: finishCallback
           });
         }
         li = $('[rel="' + decodeURIComponent(dir) + '"]').parent();
@@ -163,10 +180,10 @@
       }
     };
 
-    FileTree.prototype._trigger = function(el, eventType, data) {
+    FileTree.prototype._trigger = function(eventType, data) {
       var $el;
-      $el = $(el);
-      return $el.trigger(eventType, data);
+      $el = this.jqft.container;
+      return $el.triggerHandler(eventType, data);
     };
 
     return FileTree;

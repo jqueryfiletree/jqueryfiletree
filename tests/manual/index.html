@@ -27,7 +27,7 @@
 
 	<!-- Favicon
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<link rel="icon" type="image/png" href="images/favicon.png" />
+	<!-- <link rel="icon" type="image/png" href="images/favicon.png" /> -->
 
 </head>
 
@@ -173,7 +173,7 @@ $('.filetree-multiselect').fileTree({
 			</div>
 		</div>
 
-		<!-- RIGGERS -->
+		<!-- TRIGGERS -->
 		<div class="row" id="events">
 			<div class="four columns offset-by-one filetree-block">
 				<div class="filetree-events"></div>
@@ -225,9 +225,7 @@ $('.filetree-events')
 			$('.filetree-basic').fileTree({
 				script: 'connectors/jqueryFileTree.php'
 			}, function(file) {
-				console.log(file);
 				// do something with file
-				console.log( $('a[rel="'+file+'"]').text() );
 				$('.selected-file').text( $('.filetree-basic a[rel="'+file+'"]').text() );
 			});
 
@@ -273,16 +271,19 @@ $('.filetree-events')
 
 			$('.filetree-events')
 				.fileTree({
-				   script: 'connectors/jqueryFileTree.php',
+				   script: 'connectors/jqueryFileTree.php'
 				})
-				.on('filetreeexpanded filetreecollapsed filetreeclicked', function(e, data) {
+				.on('filetreeinitiated filetreeexpand filetreeexpanded filetreecollapse filetreecollapsed filetreeclicked', function(e, data) {
 					if( $('.events-log div').length >= 5 )
 						$('.events-log div:nth(0)').slideUp('slow', function(){
 							$(this).remove();
 							$('.events-log').append( '<div>'+data.value+' '+e.type.replace('filetree','')+'</div>');
 						});
 					else {
-						$('.events-log').append( '<div>'+data.value+' '+e.type.replace('filetree','')+'</div>');
+						if( e.type == 'filetreeinitiated' )
+							$('.events-log').append( '<div>filetree-events initiated</div>');
+						else
+							$('.events-log').append( '<div>'+data.value+' '+e.type.replace('filetree','')+'</div>');
 					}
 				});
 

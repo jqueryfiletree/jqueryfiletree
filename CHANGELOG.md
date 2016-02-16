@@ -1,3 +1,10 @@
+### 2.1.1 - 02/16/2016
+* Finally pushing '-expanded' and '-collapsed' events into a callback
+* Adding 'filetreeinitiated' event
+
+### 2.1.0 - 02/15/2016
+* Replacing the plethora of event binding with one delegate event.
+
 ### 2.0.2 - 08/13/2015
 * Add javascript function as possible data source (#19)
 * Some gulpfile.js modifications
