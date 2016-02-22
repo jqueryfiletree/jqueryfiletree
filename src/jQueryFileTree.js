@@ -45,7 +45,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.data = {};
       $el.html('<ul class="jqueryFileTree start"><li class="wait">' + this.options.loadMessage + '<li></ul>');
       _this.showTree($el, escape(this.options.root), function() {
-        return _this._trigger('filetreeinitiated', {});
+        return _this._trigger('filetreeinitiated', {
+          options: _this.options
+        });
       });
       $el.delegate("li a", this.options.folderEvent, _this.onEvent);
     }
@@ -65,6 +67,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       _this.data.value = $ev.text();
       _this.data.rel = $ev.prop('rel');
       _this.data.container = jqft.container;
+      _this.data.options = _this.options;
       if ($ev.parent().hasClass('directory')) {
         if ($ev.parent().hasClass('collapsed')) {
           if (!options.multiFolder) {
