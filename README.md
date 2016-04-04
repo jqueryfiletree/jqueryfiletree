@@ -116,14 +116,15 @@ jQueryFileTree comes with a handful of serverside connector scripts that are use
 
 Connector scripts for the following languages are provided:
 
-* PHP by Cory LaViska (originally)
-* ASP (VBS) by Chazzuka
+* PHP by [Cory LaViska](http://www.abeautifulsite.net/) (originally)
+* ASP (VBS) by [Chazzuka](http://www.chazzuka.com/)
 * ASP.NET (C#) by Andrew Sweeny
 * ColdFusion by Tjarko Rikkerink
 * JSP by Joshua Gould
 * Lasso by Marc Sabourdin
-* Lasso by Jason Huck
-* Perl by Oleg Burlaca
+* Lasso by [Jason Huck](http://devblog.jasonhuck.com/)
+* Node.js by [Peng Wang](http://weibo.com/u/1631289591)
+* Perl by [Oleg Burlaca](http://www.burlaca.com/2009/02/jquery-file-tree-connector/)
 * Python/Django by Martin Skou
 * Ruby by Erik Lax
 
