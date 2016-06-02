@@ -117,6 +117,7 @@ jQueryFileTree comes with a handful of serverside connector scripts that are use
 Connector scripts for the following languages are provided:
 
 * PHP by [Cory LaViska](http://www.abeautifulsite.net/) (originally)
+* PHP-Laravel 5.* by [Jean Jar](https://github.com/jeanjar/)
 * ASP (VBS) by [Chazzuka](http://www.chazzuka.com/)
 * ASP.NET (C#) by Andrew Sweeny
 * ColdFusion by Tjarko Rikkerink
