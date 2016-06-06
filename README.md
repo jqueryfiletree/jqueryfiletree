@@ -83,6 +83,7 @@ Parameters are passed as an object to the fileTree() function. Valid options inc
 	<tr> <td>multiSelect</td> <td>Append checkbox to each line item to select more than one</td> <td>false</td> </tr>
 	<tr> <td>onlyFolders</td> <td>Filter files and only return folders</td> <td>false</td> </tr>
 	<tr> <td>onlyFiles</td> <td>Filter folders and only return files</td> <td>false</td> </tr>
+	<tr> <td>preventLinkAction</td> <td>Prevents default link-clicking action from occurring. This, in effect, prevents the page from resetting to the top.</td> <td>false</td> </tr>
 </table>
 
 \* _Anything other than 'swing' and 'linear' requires an external lib or script like [jQuery UI](http://jqueryui.com/) or [jquery.easing](https://github.com/gdsmith/jquery.easing/)_

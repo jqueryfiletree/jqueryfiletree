@@ -35,7 +35,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         errorMessage: 'Unable to get file tree information',
         multiSelect: false,
         onlyFolders: false,
-        onlyFiles: false
+        onlyFiles: false,
+        preventLinkAction: false
       };
       this.jqft = {
         container: $el
@@ -65,6 +66,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       _this.data.value = $ev.text();
       _this.data.rel = $ev.prop('rel');
       _this.data.container = jqft.container;
+      if (options.preventLinkAction) {
+        event.preventDefault();
+      }
       if ($ev.parent().hasClass('directory')) {
         if ($ev.parent().hasClass('collapsed')) {
           if (!options.multiFolder) {
