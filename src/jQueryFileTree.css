@@ -12,21 +12,8 @@ UL.jqueryFileTree LI {
   padding-left: 20px;
   margin: 0;
   white-space: nowrap;
+  /* File Extensions */
 }
-
-UL.jqueryFileTree A {
-  color: #333;
-  text-decoration: none;
-  display: inline-block;
-  padding: 0 2px;
-  cursor: pointer;
-}
-
-UL.jqueryFileTree A:hover {
-  background: #BDF;
-}
-
-/* Core Styles */
 UL.jqueryFileTree LI.directory {
   background: url(images/directory.png) left top no-repeat;
 }
@@ -48,8 +35,6 @@ UL.jqueryFileTree LI.wait {
 UL.jqueryFileTree LI.selected > a {
   font-weight: bold;
 }
-
-/* File Extensions*/
 UL.jqueryFileTree LI.ext_3gp {
   background: url(images/film.png) left top no-repeat;
 }
@@ -149,14 +134,11 @@ UL.jqueryFileTree LI.ext_mpg {
 UL.jqueryFileTree LI.ext_mpeg {
   background: url(images/film.png) left top no-repeat;
 }
-UL.jqueryFileTree LI.ext_ogv {
-  background: url(images/film.png) left top no-repeat;
-}
-UL.jqueryFileTree LI.ext_webm {
-  background: url(images/film.png) left top no-repeat;
-}
 UL.jqueryFileTree LI.ext_ogg {
   background: url(images/music.png) left top no-repeat;
+}
+UL.jqueryFileTree LI.ext_ogv {
+  background: url(images/film.png) left top no-repeat;
 }
 UL.jqueryFileTree LI.ext_pcx {
   background: url(images/picture.png) left top no-repeat;
@@ -218,6 +200,9 @@ UL.jqueryFileTree LI.ext_vb {
 UL.jqueryFileTree LI.ext_wav {
   background: url(images/music.png) left top no-repeat;
 }
+UL.jqueryFileTree LI.ext_webm {
+  background: url(images/film.png) left top no-repeat;
+}
 UL.jqueryFileTree LI.ext_wmv {
   background: url(images/film.png) left top no-repeat;
 }
@@ -229,4 +214,14 @@ UL.jqueryFileTree LI.ext_xml {
 }
 UL.jqueryFileTree LI.ext_zip {
   background: url(images/zip.png) left top no-repeat;
+}
+UL.jqueryFileTree A {
+  color: #333;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0 2px;
+  cursor: pointer;
+}
+UL.jqueryFileTree A:hover {
+  background: #BDF;
 }
