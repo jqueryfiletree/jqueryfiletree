@@ -195,6 +195,9 @@ LICENSING & TERMS OF USE
 ========================
 This plugin is dual-licensed under the GNU General Public License and the MIT License and is copyright 2008 A Beautiful Site, LLC.
 
+CONTRIBUTING
+============
+Gulp is used to compile the CoffeeScript and LESS files into js and css files respectively. If you are making changes to jQueryFileTree itself (and not the connectors), you **MUST** make your changes inside jQueryFileTree.coffee and jQueryFileTree.less or the next time jQueryFileTree is compiled your changes will disappear.
 
 TESTING
 =======
