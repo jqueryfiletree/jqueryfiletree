@@ -34,6 +34,7 @@ do($ = window.jQuery, window) ->
                 multiSelect: false
                 onlyFolders: false
                 onlyFiles: false
+                preventLinkAction: false
             }
             @jqft = {
                 container: $el # initiator element
@@ -69,6 +70,8 @@ do($ = window.jQuery, window) ->
             _this.data.rel       = $ev.prop('rel')
             _this.data.container = jqft.container
 
+            if options.preventLinkAction
+                event.preventDefault()
             if $ev.parent().hasClass('directory')
                 if $ev.parent().hasClass('collapsed')
                     # Expand
