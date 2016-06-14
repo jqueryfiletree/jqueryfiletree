@@ -83,6 +83,7 @@ Parameters are passed as an object to the fileTree() function. Valid options inc
 	<tr> <td>multiSelect</td> <td>Append checkbox to each line item to select more than one</td> <td>false</td> </tr>
 	<tr> <td>onlyFolders</td> <td>Filter files and only return folders</td> <td>false</td> </tr>
 	<tr> <td>onlyFiles</td> <td>Filter folders and only return files</td> <td>false</td> </tr>
+	<tr> <td>preventLinkAction</td> <td>Prevents default link-clicking action from occurring. This, in effect, prevents the page from resetting to the top.</td> <td>false</td> </tr>
 </table>
 
 \* _Anything other than 'swing' and 'linear' requires an external lib or script like [jQuery UI](http://jqueryui.com/) or [jquery.easing](https://github.com/gdsmith/jquery.easing/)_
@@ -194,6 +195,9 @@ LICENSING & TERMS OF USE
 ========================
 This plugin is dual-licensed under the GNU General Public License and the MIT License and is copyright 2008 A Beautiful Site, LLC.
 
+CONTRIBUTING
+============
+Gulp is used to compile the CoffeeScript and LESS files into js and css files respectively. If you are making changes to jQueryFileTree itself (and not the connectors), you **MUST** make your changes inside jQueryFileTree.coffee and jQueryFileTree.less or the next time jQueryFileTree is compiled your changes will disappear.
 
 TESTING
 =======
