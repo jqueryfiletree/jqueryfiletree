@@ -13,77 +13,82 @@ UL.jqueryFileTree {
     	padding-left: 20px;
     	margin: 0;
     	white-space: nowrap;
+    	
+    	// Mixin used by all icons
+	.background-icon(@img) {
+		@normalizedUrl: ~'image/@{img}' ;
+		background: url(@normalizedUrl) left top no-repeat;
+	}
 
 		// Core Icons
-		&.directory { background: url(images/directory.png) left top no-repeat; }
-		&.directory-locked { background: url(images/directory-lock.png) left top no-repeat; }
-		&.expanded { background: url(images/folder_open.png) left top no-repeat; }
-		&.file { background: url(images/file.png) left top no-repeat; }
-		&.file-locked { background: url(images/file-lock.png) left top no-repeat !important; }
-		&.wait { background: url(images/spinner.gif) left top no-repeat; }
+		&.directory { .background-icon('directory.png'); }
+		&.directory-locked { .background-icon('directory-lock.png'); }
+		&.expanded { .background-icon('folder_open.png'); }
+		&.file { .background-icon('file.png'); }
+		&.file-locked { .background-icon('file-lock.png') !important; }
+		&.wait { .background-icon('spinner.gif'); }
 		&.selected > a { font-weight: bold; }
-
 		// File Extensions
-		&.ext_3gp { background: url(images/film.png) left top no-repeat; }
-		&.ext_afp { background: url(images/code.png) left top no-repeat; }
-		&.ext_afpa { background: url(images/code.png) left top no-repeat; }
-		&.ext_asp { background: url(images/code.png) left top no-repeat; }
-		&.ext_aspx { background: url(images/code.png) left top no-repeat; }
-		&.ext_avi { background: url(images/film.png) left top no-repeat; }
-		&.ext_bat { background: url(images/application.png) left top no-repeat; }
-		&.ext_bmp { background: url(images/picture.png) left top no-repeat; }
-		&.ext_c { background: url(images/code.png) left top no-repeat; }
-		&.ext_cfm { background: url(images/code.png) left top no-repeat; }
-		&.ext_cgi { background: url(images/code.png) left top no-repeat; }
-		&.ext_com { background: url(images/application.png) left top no-repeat; }
-		&.ext_cpp { background: url(images/code.png) left top no-repeat; }
-		&.ext_css { background: url(images/css.png) left top no-repeat; }
-		&.ext_doc { background: url(images/doc.png) left top no-repeat; }
-		&.ext_exe { background: url(images/application.png) left top no-repeat; }
-		&.ext_gif { background: url(images/picture.png) left top no-repeat; }
-		&.ext_fla { background: url(images/flash.png) left top no-repeat; }
-		&.ext_h { background: url(images/code.png) left top no-repeat; }
-		&.ext_htm { background: url(images/html.png) left top no-repeat; }
-		&.ext_html { background: url(images/html.png) left top no-repeat; }
-		&.ext_jar { background: url(images/java.png) left top no-repeat; }
-		&.ext_jpg { background: url(images/picture.png) left top no-repeat; }
-		&.ext_jpeg { background: url(images/picture.png) left top no-repeat; }
-		&.ext_js { background: url(images/script.png) left top no-repeat; }
-		&.ext_lasso { background: url(images/code.png) left top no-repeat; }
-		&.ext_log { background: url(images/txt.png) left top no-repeat; }
-		&.ext_m4p { background: url(images/music.png) left top no-repeat; }
-		&.ext_mov { background: url(images/film.png) left top no-repeat; }
-		&.ext_mp3 { background: url(images/music.png) left top no-repeat; }
-		&.ext_mp4 { background: url(images/film.png) left top no-repeat; }
-		&.ext_mpg { background: url(images/film.png) left top no-repeat; }
-		&.ext_mpeg { background: url(images/film.png) left top no-repeat; }
-		&.ext_ogg { background: url(images/music.png) left top no-repeat; }
-		&.ext_ogv { background: url(images/film.png) left top no-repeat; }
-		&.ext_pcx { background: url(images/picture.png) left top no-repeat; }
-		&.ext_pdf { background: url(images/pdf.png) left top no-repeat; }
-		&.ext_php { background: url(images/php.png) left top no-repeat; }
-		&.ext_png { background: url(images/picture.png) left top no-repeat; }
-		&.ext_ppt { background: url(images/ppt.png) left top no-repeat; }
-		&.ext_psd { background: url(images/psd.png) left top no-repeat; }
-		&.ext_pl { background: url(images/script.png) left top no-repeat; }
-		&.ext_py { background: url(images/script.png) left top no-repeat; }
-		&.ext_rb { background: url(images/ruby.png) left top no-repeat; }
-		&.ext_rbx { background: url(images/ruby.png) left top no-repeat; }
-		&.ext_rhtml { background: url(images/ruby.png) left top no-repeat; }
-		&.ext_rpm { background: url(images/linux.png) left top no-repeat; }
-		&.ext_ruby { background: url(images/ruby.png) left top no-repeat; }
-		&.ext_sql { background: url(images/db.png) left top no-repeat; }
-		&.ext_swf { background: url(images/flash.png) left top no-repeat; }
-		&.ext_tif { background: url(images/picture.png) left top no-repeat; }
-		&.ext_tiff { background: url(images/picture.png) left top no-repeat; }
-		&.ext_txt { background: url(images/txt.png) left top no-repeat; }
-		&.ext_vb { background: url(images/code.png) left top no-repeat; }
-		&.ext_wav { background: url(images/music.png) left top no-repeat; }
-		&.ext_webm { background: url(images/film.png) left top no-repeat; }
-		&.ext_wmv { background: url(images/film.png) left top no-repeat; }
-		&.ext_xls { background: url(images/xls.png) left top no-repeat; }
-		&.ext_xml { background: url(images/code.png) left top no-repeat; }
-		&.ext_zip { background: url(images/zip.png) left top no-repeat; }
+		&.ext_3gp { .background-icon('film.png'); }
+		&.ext_afp { .background-icon('code.png'); }
+		&.ext_afpa { .background-icon('code.png'); }
+		&.ext_asp { .background-icon('code.png'); }
+		&.ext_aspx { .background-icon('code.png'); }
+		&.ext_avi { .background-icon('film.png'); }
+		&.ext_bat { .background-icon('application.png'); }
+		&.ext_bmp { .background-icon('picture.png'); }
+		&.ext_c { .background-icon('code.png'); }
+		&.ext_cfm { .background-icon('code.png'); }
+		&.ext_cgi { .background-icon('code.png'); }
+		&.ext_com { .background-icon('application.png'); }
+		&.ext_cpp { .background-icon('code.png'); }
+		&.ext_css { .background-icon('css.png'); }
+		&.ext_doc { .background-icon('doc.png'); }
+		&.ext_exe { .background-icon('application.png'); }
+		&.ext_gif { .background-icon('picture.png'); }
+		&.ext_fla { .background-icon('flash.png'); }
+		&.ext_h { .background-icon('code.png'); }
+		&.ext_htm { .background-icon('html.png'); }
+		&.ext_html { .background-icon('html.png'); }
+		&.ext_jar { .background-icon('java.png'); }
+		&.ext_jpg { .background-icon('picture.png'); }
+		&.ext_jpeg { .background-icon('picture.png'); }
+		&.ext_js { .background-icon('script.png'); }
+		&.ext_lasso { .background-icon('code.png'); }
+		&.ext_log { .background-icon('txt.png'); }
+		&.ext_m4p { .background-icon('music.png'); }
+		&.ext_mov { .background-icon('film.png'); }
+		&.ext_mp3 { .background-icon('music.png'); }
+		&.ext_mp4 { .background-icon('film.png'); }
+		&.ext_mpg { .background-icon('film.png'); }
+		&.ext_mpeg { .background-icon('film.png'); }
+		&.ext_ogg { .background-icon('music.png'); }
+		&.ext_ogv { .background-icon('film.png'); }
+		&.ext_pcx { .background-icon('picture.png'); }
+		&.ext_pdf { .background-icon('pdf.png'); }
+		&.ext_php { .background-icon('php.png'); }
+		&.ext_png { .background-icon('picture.png'); }
+		&.ext_ppt { .background-icon('ppt.png'); }
+		&.ext_psd { .background-icon('psd.png'); }
+		&.ext_pl { .background-icon('script.png'); }
+		&.ext_py { .background-icon('script.png'); }
+		&.ext_rb { .background-icon('ruby.png'); }
+		&.ext_rbx { .background-icon('ruby.png'); }
+		&.ext_rhtml { .background-icon('ruby.png'); }
+		&.ext_rpm { .background-icon('linux.png'); }
+		&.ext_ruby { .background-icon('ruby.png'); }
+		&.ext_sql { .background-icon('db.png'); }
+		&.ext_swf { .background-icon('flash.png'); }
+		&.ext_tif { .background-icon('picture.png'); }
+		&.ext_tiff { .background-icon('picture.png'); }
+		&.ext_txt { .background-icon('txt.png'); }
+		&.ext_vb { .background-icon('code.png'); }
+		&.ext_wav { .background-icon('music.png'); }
+		&.ext_webm { .background-icon('film.png'); }
+		&.ext_wmv { .background-icon('film.png'); }
+		&.ext_xls { .background-icon('xls.png'); }
+		&.ext_xml { .background-icon('code.png'); }
+		&.ext_zip { .background-icon('zip.png'); }
     }
 
     A {
