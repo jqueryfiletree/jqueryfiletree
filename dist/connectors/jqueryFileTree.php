@@ -38,7 +38,7 @@ $onlyFiles = ( isset($_POST['onlyFiles']) && $_POST['onlyFiles'] == 'true' ) ? t
 
 if( file_exists($postDir) ) {
 
-	$files		= scandir($postDir);
+	$files		= scandir($postDir,ENT_QUOTES);
 	$returnDir	= substr($postDir, strlen($root));
 
 	natcasesort($files);
