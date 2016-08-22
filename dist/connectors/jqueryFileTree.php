@@ -38,7 +38,7 @@ $onlyFiles = ( isset($_POST['onlyFiles']) && $_POST['onlyFiles'] == 'true' ) ? t
 
 if( file_exists($postDir) ) {
 
-	$files		= scandir($postDir,ENT_QUOTES);
+	$files		= scandir($postDir);
 	$returnDir	= substr($postDir, strlen($root));
 
 	natcasesort($files);
@@ -48,7 +48,7 @@ if( file_exists($postDir) ) {
 		echo "<ul class='jqueryFileTree'>";
 
 		foreach( $files as $file ) {
-			$htmlRel	= htmlentities($returnDir . $file);
+			$htmlRel	= htmlentities($returnDir . $file,ENT_QUOTES);
 			$htmlName	= htmlentities($file);
 			$ext		= preg_replace('/^.*\./', '', $file);
 
