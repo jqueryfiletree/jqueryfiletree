@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"path"
 	"regexp"
+	"runtime"
 )
 
 var (
@@ -21,16 +22,25 @@ func main() {
 func handler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	dir := r.Form["dir"][0]
-	out := ""
-	out += `<ul class="jqueryFileTree" style="display: none;">`
-	files, _ := ioutil.ReadDir(dir)
+	if dir == "/" && runtime.GOOS == "windows" {
+		dir = "C:/"
+	}
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		panic(err)	
+	}
+	out := `<ul class="jqueryFileTree" style="display: none;">`
 	for _, f := range files {
 		if false == noHidden || f.Name()[0] != '.' {
 			p := path.Join(dir, f.Name())
 			if true == f.IsDir() {
 				out += fmt.Sprintf(`<li class="directory collapsed"><a rel="%s">%s</a></li>`, p+"/", f.Name())
 			} else {
-				out += fmt.Sprintf(`<li class="file ext_%s"><a rel="%s">%s</a></li>`, path.Ext(f.Name())[1:], p, f.Name())
+				ext := path.Ext(f.Name())
+				if ext != "" {
+					ext = ext[1:]
+				}
+				out += fmt.Sprintf(`<li class="file ext_%s"><a rel="%s">%s</a></li>`, ext, p, f.Name())
 			}
 		}
 	}
