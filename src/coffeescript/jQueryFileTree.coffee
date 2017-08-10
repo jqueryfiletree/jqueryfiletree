@@ -168,8 +168,9 @@ do($ = window.jQuery, window) ->
 
             if typeof options.script is 'function'
                 result = options.script(data)
-                if typeof result is 'string' or result instanceof jQuery
-                    handleResult(result)
+                if typeof result is 'string' or result instanceof jQuery or (typeof result is 'object' && typeof result.then is 'function')
+                    $.when result
+                        .then handleResult, handleFail
                 else
                     handleFail()
             else
