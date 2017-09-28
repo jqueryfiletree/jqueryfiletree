@@ -52,7 +52,7 @@ do($ = window.jQuery, window) ->
             )
 
             # set delegate event handler for clicks
-            $el.delegate "li a", @options.folderEvent, _this.onEvent
+            $el.on @options.folderEvent, "li a", _this.onEvent
 
 
         onEvent: (event) =>

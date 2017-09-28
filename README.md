@@ -25,7 +25,7 @@ ABOUT
 
 jQueryFileTree is a configurable, AJAX file browser plugin for jQuery. This repo is a continuation of unmaintained jQuery File Tree (12 April 2008) by Cory S.N. LaViska at ABeautifulSite.net
 
-jQueryFileTree requires at least jQuery 1.2
+jQueryFileTree requires at least jQuery 1.9.1
 
 
 FEATURES
