@@ -47,7 +47,7 @@ do($ = window.jQuery, window) ->
             $el.html('<ul class="jqueryFileTree start"><li class="wait">' + @options.loadMessage + '<li></ul>')
 
             # Get the initial file list
-            _this.showTree( $el, escape(@options.root), () ->
+            _this.showTree( $el, @options.root, () ->
                 _this._trigger('filetreeinitiated', {})
             )
 
