@@ -154,7 +154,7 @@ do($ = window.jQuery, window) ->
                         complete: finishCallback
                     }
                 # if multiselect is on and the parent folder is selected, propagate check to child elements
-                li = $('[rel="'+decodeURIComponent(dir)+'"]').parent()
+                li = $('[rel="'+dir+'"]').parent()
                 if options.multiSelect && li.children('input').is(':checked')
                     li.find('ul li input').each () ->
                         $(this).prop('checked', true)
