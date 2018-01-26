@@ -45,7 +45,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.callback = callback;
       this.data = {};
       $el.html('<ul class="jqueryFileTree start"><li class="wait">' + this.options.loadMessage + '<li></ul>');
-      _this.showTree($el, escape(this.options.root), function() {
+      _this.showTree($el, this.options.root, function() {
         return _this._trigger('filetreeinitiated', {});
       });
       $el.delegate("li a", this.options.folderEvent, _this.onEvent);
@@ -149,7 +149,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
             complete: finishCallback
           });
         }
-        li = $('[rel="' + decodeURIComponent(dir) + '"]').parent();
+        li = $('[rel="' + dir + '"]').parent();
         if (options.multiSelect && li.children('input').is(':checked')) {
           li.find('ul li input').each(function() {
             $(this).prop('checked', true);
