@@ -2,10 +2,11 @@ jQueryFileTree
 ==============
 [![GitHub version](https://badge.fury.io/gh/jqueryfiletree%2Fjqueryfiletree.svg)](http://badge.fury.io/gh/jqueryfiletree%2Fjqueryfiletree)
 
-##### NOTE:
+# NOTE:
 
-__v2 is written in CoffeeScript and LESS. Now supports Bower and Gulp (for compiling).
-View CHANGELOG.md to read more.__
+## I no longer use jQuery and have no need for a filetree, so it would be great if someone wanted to take over this project to maintain it, address issues, set up integrated testing, etc.
+
+
 
 
 DEMO
@@ -75,8 +76,8 @@ Parameters are passed as an object to the fileTree() function. Valid options inc
 	<tr> <td>folderEvent</td> <td>event to trigger expand/collapse</td> <td>"click"</td> </tr>
 	<tr> <td>expandSpeed</td> <td>Speed to expand branches (in ms); use -1 for no animation</td> <td>500</td> </tr>
 	<tr> <td>collapseSpeed</td> <td>Speed to collapse branches (in ms); use -1 for no animation</td> <td>500</td> </tr>
-	<tr> <td>expandEasing \* </td> <td>Easing function to use on expand</td> <td>"swing"</td> </tr>
-	<tr> <td>collapseEasing \* </td> <td>Easing function to use on collapse</td> <td>"swing"</td> </tr>
+	<tr> <td>expandEasing</td> <td>Easing function to use on expand</td> <td>"swing"</td> </tr>
+	<tr> <td>collapseEasing</td> <td>Easing function to use on collapse</td> <td>"swing"</td> </tr>
 	<tr> <td>multiFolder</td> <td>Whether or not to limit the browser to one subfolder at a time</td> <td>true</td> </tr>
 	<tr> <td>loadMessage</td> <td>Message to display while initial tree loads (can be HTML)</td> <td>"Loading..."</td> </tr>
 	<tr> <td>errorMessage</td> <td>Message to display if unable to load tree</td> <td>"Unable to get file tree information"</td> </tr>
