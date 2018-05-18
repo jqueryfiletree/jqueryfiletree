@@ -24,6 +24,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       _this = this;
       defaults = {
         root: '/',
+        scriptFunctionHasCallback: false,
         script: '/files/filetree',
         folderEvent: 'click',
         expandSpeed: 500,
@@ -164,11 +165,19 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         return false;
       };
       if (typeof options.script === 'function') {
-        result = options.script(data);
-        if (typeof result === 'string' || result instanceof jQuery) {
-          return handleResult(result);
+        function gotResult(result) {
+          if (typeof result === 'string' || result instanceof jQuery) {
+            return handleResult(result);
+          } else {
+            return handleFail();
+          }
+        }
+        if (options.scriptFunctionHasCallback) {
+          options.script(data, function(result) {
+            gotResult(result);
+          });
         } else {
-          return handleFail();
+          gotResult(options.script(data));
         }
       } else {
         return $.ajax({
