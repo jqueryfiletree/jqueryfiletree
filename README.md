@@ -208,6 +208,17 @@ In order to test, you'll need Bower and Gulp. Right now, I just have a manual br
 * `gulp less` will compile `/src/less/jQueryFileTree.less` to CSS, minify, and copy to `/dist/` as well as the testing folder (if testing is set up). A non-minified version is saved to `/src/` for debugging the output.
 * `gulp` or `gulp default` will run `coffee` and `less` consecutively, then update the manual test folder.
 
+It is necessary to open `tests/manual/index.html` in a browser to run the
+manual tests. This page depends on `tests/manual/connectors/jqueryFileTree.php`
+to be served by a web server with PHP. A simple way to accomplish this, if you
+have Docker installed on your system, is to run the following command from
+`tests/manual`:
+
+    $ docker run -d -p 80:80 --name my-apache-php-app -v "$PWD":/var/www/html php:7.0-apache
+
+Then browse to `http://localhost/index.html`. Details on the official PHP
+Docker image used by the above command may be found at
+https://hub.docker.com/_/php/.
 
 SPECIAL THANKS
 ==============
